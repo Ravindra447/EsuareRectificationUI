@@ -1,0 +1,7 @@
+{
+  "name": "esuarerectificationui",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
