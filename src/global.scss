@@ -1,26 +1,175 @@
-/*
- * App Global CSS
- * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
- */
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use "@angular/material" as mat;
+// Plus imports for other components in your app.
 
-/* Core CSS required for Ionic components to work properly */
-@import "~@ionic/angular/css/core.css";
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
 
-/* Basic CSS for apps built with Ionic */
-@import "~@ionic/angular/css/normalize.css";
-@import "~@ionic/angular/css/structure.css";
-@import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$esquare-prod-ui-primary: mat.define-palette(mat.$indigo-palette);
+$esquare-prod-ui-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 
-/* Optional CSS utils that can be commented out */
-@import "~@ionic/angular/css/padding.css";
-@import "~@ionic/angular/css/float-elements.css";
-@import "~@ionic/angular/css/text-alignment.css";
-@import "~@ionic/angular/css/text-transformation.css";
-@import "~@ionic/angular/css/flex-utils.css";
+// The warn palette is optional (defaults to red).
+$esquare-prod-ui-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$esquare-prod-ui-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $esquare-prod-ui-primary,
+      accent: $esquare-prod-ui-accent,
+      warn: $esquare-prod-ui-warn,
+    ),
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($esquare-prod-ui-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+@import "./scss/global.scss";
+@import "./scss/theme-colors.scss";
+
+.sidenav {
+  width: 260px !important;
+  box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12),
+    0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.mat-drawer-inner-container::-webkit-scrollbar-track {
+  border-radius: 10px;
+  // background-color: #F5F5F5;
+}
+
+.mat-drawer-inner-container::-webkit-scrollbar {
+  width: 3px;
+  // background-color: #F5F5F5;
+}
+
+.mat-drawer-inner-container::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: $scroll-bar-color;
+}
+
+.dashboard-logo {
+  margin-top: 20px;
+  width: 200px !important;
+  height: 50px !important;
+  cursor: pointer;
+  // margin: 10px 10px 0 10px;
+  // box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+}
+
+.logo-header {
+  margin: 0px !important;
+  font-family: $h-font-family !important;
+  text-align: center;
+  font-weight: 600 !important;
+  cursor: pointer;
+  // color:$header-title-color ;
+}
+
+.sidenav-container {
+  height: 100%;
+}
+
+.active {
+  background: $nav-selected-background !important;
+  color: $nav-selected-color !important;
+  border-radius: 3px;
+  // box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(86, 95, 216, 0.4);
+}
+.nav-link{
+  margin: 10px !important;
+}
+.nav-text {
+  // text-transform: uppercase;
+  font-family: $nav-font-family;
+  margin: 10px !important;
+  font-weight: 500;
+  color: $nav-text-color;
+}
+.active i,
+.active p {
+  color: $nav-selected-color !important;
+}
+
+.mat-drawer-inner-container {
+  overflow-x: hidden !important;
+}
+
+.mat-list-base {
+  padding-top: 0 !important;
+}
+// toolbar nav-bar
+.home-background,
+.home-toolbar {
+  background: $body-background-color !important;
+}
+.toolbar-nav-link {
+  text-decoration: none;
+  color: $h-color !important;
+  font-size: 14px !important;
+  font-weight: 700;
+  font-family: $h-font-family;
+  margin-left: 0px;
+  padding-right: 10px !important;
+}
+.toolbar-nav-link:hover,
+.toolbar-logout-icon:hover {
+  color: $nav-icon-color !important;
+}
+
+/*Main Body */
+
+.main-content {
+  // background-color: $body-background-color !important;
+  min-height: 650px;
+  padding: 16px;
+  position: relative;
+}
+
+.main-container {
+  margin-top: 100px;
+}
+
+.main-container1 {
+  margin-top: 130px !important;
+  padding: 16px !important;
+}
+
+.main-page {
+  min-height: 650px;
+  margin-top: 100px;
+}
+
+// main site footer
+.footer {
+  padding-top: 80px;
+  padding-bottom: 40px;
+  background: $main-footer-background;
+}
+
+.footer-widget ul li {
+  margin-bottom: 15px;
+}
+
+.footer-widget ul li a {
+  color: $main-footer-widget;
+}
+
+.footer-widget ul li a:hover {
+  color: $radio-color;
+}
+.copyright {
+  color: $footer-color;
+}

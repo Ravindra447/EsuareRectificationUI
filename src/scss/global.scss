@@ -1,0 +1,245 @@
+@import "./theme-colors.scss";
+html,
+body {
+  height: 100%;
+}
+
+body {
+  line-height: 1.7 !important;
+  font-family: $h-font-family;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden !important;
+}
+
+p {
+  font-family: $p-font-family;
+  color: $p-color;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: $h-font-family !important;
+  font-weight: 600;
+  color: $h-color;
+}
+
+h4,
+.h4 {
+  font-size: 22px;
+}
+
+h5,
+.h5 {
+  font-size: 18px;
+}
+
+h6,
+.h6 {
+  font-size: 16px;
+}
+a {
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+//Card
+.card {
+  // padding-bottom: 20px !important;
+  border-radius: 6px !important;
+  // min-height: 100px;
+}
+.card [class*="card-header-"]:not(.card-header-icon):not(.card-header-text):not(.card-header-image) {
+  border-radius: 3px !important;
+  margin-top: -20px !important;
+  // padding: 7px !important;
+}
+.card [class*="card-header-"] {
+  margin: 0px 15px;
+  padding: 10px;
+  position: relative;
+}
+
+.card-title,
+mat-panel-title {
+  color: $card-title-color !important;
+  font-family: "Montserrat", sans-serif;
+  text-transform: uppercase;
+  font-weight: 500 !important;
+  font-size: 1rem !important;
+  margin: 5px 0 0 5px !important;
+  letter-spacing: 1px;
+}
+
+.card-header {
+  background: $card-header-background-color !important;
+}
+.card-body{
+  min-height: 300px;
+}
+
+//Add icon
+.add-icon {
+  position: absolute;
+  right: 20px;
+  font-size: 1.5rem !important;
+  bottom: 2px;
+  cursor: pointer;
+  color: $add-plus-color;
+}
+//Add icon
+.close-icon {
+  position: absolute;
+  right: 30px;
+  font-size: 1.5rem !important;
+  bottom: 2px;
+  cursor: pointer;
+  color: $add-plus-color;
+}
+
+//other icons
+.fa-arrow-left,
+.fa-arrow-left:hover {
+  color: $add-plus-color;
+}
+
+.fa {
+  cursor: pointer;
+}
+//Input Fields
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+  background-color: $mat-form-field-background-color !important;
+}
+
+.mat-form-field {
+  font-size: 14px !important;
+  // color: red !important; // text
+  width: 100%;
+  margin-bottom: 5px;
+}
+.mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: $h-color !important;
+}
+
+.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: $mat-form-field-background-color !important;
+}
+/*upArrow in number input field*/
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+//Slide toggle
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: $radio-slider-outer;
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: $radio-slider-inner;
+}
+
+.mat-slide-toggle.mat-accent .mat-ripple-element {
+  background-color: $radio-slider-inner;
+}
+
+//mat checkbox
+.mat-checkbox-checked.mat-accent .mat-checkbox-background,
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: $mat-tab-background-active-color;
+  /* Red background for example */
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-ripple .mat-ripple-element {
+  background-color: $mat-tab-background-active-color !important;
+}
+
+.mat-body p,
+.mat-body-1 p,
+.mat-typography p {
+  margin: 0px;
+}
+
+//btn
+.custom-button {
+  text-transform: uppercase !important;
+  border-radius: 5px !important;
+  font-family: $button-font-family;
+  padding: 10px 20px !important;
+  font-size: 13px !important;
+  color: $button-primary-color;
+  font-weight: 500 !important;
+  background-color: $button-primary-background-color;
+  line-height: normal!important;
+  cursor: pointer;
+  border: 0;
+}
+
+.custom-button:hover {
+  background-color: $button-primary-background-hover-color;
+}
+
+.btn-cancel {
+  text-transform: uppercase;
+  border-radius: 5px !important;
+  font-family: $button-font-family;
+  padding: 10px 20px !important;
+  font-size: 13px !important;
+  color: $button-cancel-color;
+  font-weight: 500 !important;
+  background-color: $button-cancel-background-color;
+  line-height: normal!important;
+  min-width: auto!important;
+  cursor: pointer;
+}
+
+.btn-cancel:hover {
+  background-color: $button-cancel-background-hover-color;
+}
+
+/* Absolute Center Spinner */
+
+.loading-indicator {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+
+.loading-indicator:before {
+  content: "";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+

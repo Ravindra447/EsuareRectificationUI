@@ -1,0 +1,51 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-12 text-center">
+                  <img class="dashboard-logo" src="../../../../../assets/eesl-logo.png" alt="">
+              </div>
+              <!-- <div class="col-12">
+                  <h2 class="logo-header">Esquare Rectification</h2>
+              </div> -->
+          </div>
+      </div>
+      <hr>
+      <mat-nav-list class="nav-link">
+          <div *ngFor="let menuItem of menuItems">
+              <a *ngIf="menuItem.nav_isAccess" mat-list-item [routerLink]="[menuItem.nav_path]" 
+              (click)="closeSideNav()" routerLinkActive="active">
+                  <i class="material-icons">{{menuItem.nav_icon}}</i>
+                  <p class="nav-text">{{menuItem.nav_title}}</p>
+              </a>
+          </div>
+      </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <mat-toolbar class="home-toolbar">
+          <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()">
+              <mat-icon  aria-label="Side nav toggle icon">menu</mat-icon>
+          </button>
+          <!-- <span *ngIf="isHandset$ | async">Manasa</span> -->
+          <div class="container-fluid">
+              <div class="row">
+                  <div class="navbar-wrapper col-6">
+                      <!-- <a class="navbar-brand" *ngIf="!(isHandset$ | async)">Coconuts & Products</a> -->
+                      <!-- <a class="navbar-brand" *ngIf="isHandset$ | async">Coconuts & Products</a> -->
+                  </div>
+                  <div class="navbar-icons col-6 ml-auto" align="end">
+                      <!-- <a class="toolbar-nav-link" routerLink="/">Home</a> -->
+                      <button mat-icon-button class="toolbar-logout-icon">
+                          <mat-icon matTooltip="Logout">power_settings_new</mat-icon>
+                      </button>
+                  </div>
+              </div>
+          </div>
+      </mat-toolbar>
+      <!-- Add Content Here -->
+      <div class="main-content">
+          <router-outlet></router-outlet>
+      </div>
+      <!-- <app-footer></app-footer> -->
+  </mat-sidenav-content>
+</mat-sidenav-container>

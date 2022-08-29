@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:400,700,800|Source+Sans+Pro:400|Catamaran:400,600,700");
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800");
+$nav-icon-color: #5f0a87; //#5f0a87,5f0a87
+$nav-text-color: #5f5858; //5f5858
+$p-font-family: "Source Sans Pro", sans-serif;
+$p-color: #757575;
+$h-color: #000;
+$h-font-family: "Catamaran", sans-serif;
+$nav-font-family: "Catamaran", sans-serif;
+
+$nav-selected-background: #5f0a87;
+$nav-selected-color: #fff;
+// Body Colors
+$body-background-color: #fff;
+// header colors
+$header-background-color: #fff;
+$header-title-color: #5f0a87;
+$header-icon-color: black !important;
+$header-profile-color: #5f0a87;
+$scroll-bar-color: #a4508b;
+$header-profile-text-color: rgb(15, 14, 14);
+$header-profile-text-font-family: "Catamaran", sans-serif;
+$header-profile-subItem-background-color: white !important;
+$header-profile-subItem-color: black !important;
+// footer colors
+$footer-color: black !important;
+// mat-tab colors
+$mat-tab-background-color: linear-gradient(315deg, #a4508b 0% , #5f0a87 74%);
+$mat-tab-text-color: #fff;
+$mat-tab-background-active-color: #a4508b !important;
+// Button colors and styles
+$button-primary-background-color: #5f0a87 !important;
+$button-primary-background-hover-color: #a4508b !important;
+$button-primary-color: #fff !important;
+$button-cancel-background-color: grey !important;
+$button-cancel-background-hover-color: lightgray !important;
+$button-cancel-color: #fff !important;
+$button-font-family: "Catamaran", sans-serif !important;
+// Card colors and styles
+$card-header-background-color: linear-gradient(315deg, #a4508b 0% , #5f0a87 74% );
+//     background-color: #5f0a87;
+// background-image: linear-gradient(326deg, #5f0a87 0%, #5f0a87 74%);
+$card-title-color: #fff;
+$card-font-family: "Catamaran", sans-serif;
+$card-background-color: white !important;
+// table Styles
+$table-header-background-color: #5f0a87;
+$gallery-card-color: #5f0a87;
+$table-header-text-color: #fff;
+$table-header-font-family: "Catamaran", sans-serif !important;
+$table-data-font-family: "Roboto", sans-serif !important;
+$table-data-color: grey;
+// radio and Slider Styles
+$radio-color: #5f0a87 !important;
+$slider-color: #5f0a87 !important;
+$radio-slider-inner: #5f0a87 !important;
+$radio-slider-outer: #5f0a87 !important;
+// error
+$error-color: red !important;
+//add icon plus
+$add-plus-color: #fff;
+//input color
+$mat-form-field-background-color: lightgray;
+$main-footer-background:#f9f9f9;
+$main-footer-widget:#777;
+$header-title-font-family:'Montserrat',
+    sans-serif;
