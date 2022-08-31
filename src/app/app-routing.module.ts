@@ -5,7 +5,7 @@ const routes: Routes = [
  
   {
     path: '',
-    redirectTo: 'esuare',
+    redirectTo: 'esquare',
     pathMatch: 'full'
   },
   {
@@ -13,7 +13,7 @@ const routes: Routes = [
     loadChildren:()=>import ('./modules/core/core.module').then(core=>core.CoreModule)
   },
   {
-    path: 'esuare',
+    path: 'esquare',
     loadChildren:()=>import ('./modules/admin/admin.module').then(admin=>admin.AdminModule)
   }
 ];

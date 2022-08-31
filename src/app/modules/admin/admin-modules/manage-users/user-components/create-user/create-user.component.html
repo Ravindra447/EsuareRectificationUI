@@ -1,0 +1,61 @@
+<div class="main-container">
+    <div class="card">
+        <div class="card-header card-header-primary">
+            <h5 class="card-title">
+                <a (click)="goBack()" class="{{iconService.fa_icons.back}}"></a>&nbsp;&nbsp;&nbsp;{{titleService.titles.admin_add_user}}</h5>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="userFormGroup">
+                <div class="row">
+                    <div class="col-md-4 col-12">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Name" autocomplete="new-password" type="text" formControlName="user_name" name="user_name" required>
+                            <mat-error *ngIf="!userFormGroup.get('user_name').valid">Enter valid name </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Email" type="text" formControlName="user_email" name="email" required>
+                            <mat-error *ngIf="!userFormGroup.get('user_email').valid">Enter valid email.</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Mobile Number" type="text" formControlName="user_mobile" name="mobile">
+                            <mat-error *ngIf="!userFormGroup.get('user_mobile').valid">Enter valid mobile number.</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12 col-12">
+                        <mat-form-field class="example-full-width">
+                            <mat-select placeholder="select city" type="text" formControlName="user_ulb" name="user_ulb" >
+                                <mat-option *ngFor="let option of cities" [value]="option.city">{{option.city}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="!userFormGroup.get('user_ulb').valid">select valid ULB. </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Password" autocomplete="new-password" type="password" formControlName="user_password" name="user_password" required>
+                            <mat-error *ngIf="!userFormGroup.get('user_password').valid">Enter valid password.</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <mat-form-field class="example-full-width">
+                            <mat-select placeholder="Role" type="text" formControlName="user_role" name="user" required>
+                                <mat-option *ngFor="let option of userRoles" [value]="option">{{option}}</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="!userFormGroup.get('user_role').valid">Enter valid user. </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12 stepper-btns">
+                        <button class="btn btn-cancel" (click)="goBack()">Cancel</button>&nbsp;
+                        <button type="submit" (click)="userOnboardFun()" [disabled]="userFormGroup.invalid" class="btn custom-button pull-right">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="loading-indicator" *ngIf="spinnerloader">
+    <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
+</div>

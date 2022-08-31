@@ -3,12 +3,14 @@
     <div class="col-md-12 col-12">
       <div class="card">
         <div class="card-header card-header-primary">
-          <h5 class="card-title"><a (click)="goBack()" class="{{iconService.fa_icons.back}}"></a>&nbsp;&nbsp;&nbsp;{{titleService.titles.admin_upload_rectification}}</h5>
+          <h5 class="card-title"><a (click)="goBack()"
+              class="{{iconService.fa_icons.back}}"></a>&nbsp;&nbsp;&nbsp;{{titleService.titles.admin_upload_rectification}}
+          </h5>
         </div>
         <div class="card-body">
           <div class="row">
             <div class="col-md-12 col-12">
-              <mat-form-field>
+              <mat-form-field (click)="removefile()">
                 <mat-toolbar>
                   <input matInput [(ngModel)]="fileAttr" readonly name="name" />
                   <button mat-flat-button color="primary">Browse File</button>
@@ -18,13 +20,53 @@
               </mat-form-field>
             </div>
             <div class="col-md-10 col-12">
-                <Strong>Note:&nbsp;</Strong> To download XLSX sample file <a style="color:#a4508b;"
-                  (click)="downloadSampleXLXSFile()">Click here</a>
+              <Strong>Note:&nbsp;</Strong>Download XLSX sample file <strong><a style="color:#a4508b;"
+                (click)="downloadSampleXLXSFile()">Click here</a></strong>
             </div>
             <div class="col-md-2 col-12" align="end">
               <button type="submit" (click)="uploadFun()"
                 class="btn btn-small custom-button pull-right">{{titleService.btn.submit}}</button>
             </div>
+            <div class="col-12" *ngIf="errorLength>0">
+              <p style="color: red;">File contains&nbsp;{{errorLength}}&nbsp;error record.</p>
+            </div>
+          </div>
+          <div class="table-responsive" *ngIf="errorLength>0" style="margin-top:20px ;">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>NameOfULB</th>
+                  <th>District</th>
+                  <th>WardNo</th>
+                  <th>Location</th>
+                  <th>PoleNumber</th>
+                  <th>Wattage</th>
+                  <th>CauseOfComplaint</th>
+                  <th>DateOfComplaint</th>
+                  <th>DateOfRectification</th>
+                  <th>Category</th>
+                  <th>Status</th>
+                  <th>Error</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of finalData">
+                  <td>{{item.NameOfULB}}</td>
+                  <td>{{item.District}}</td>
+                  <td>{{item.WardNo}}</td>
+                  <td>{{item.Location}}</td>
+                  <td>{{item.PoleNumber}}</td>
+                  <td>{{item.Wattage}}</td>
+                  <td>{{item.CauseOfComplaint}}</td>
+                  <td>{{item.DateOfComplaint}}</td>
+                  <td>{{item.DateOfRectification}}</td>
+                  <td>{{item.Category}}</td>
+                  <td>{{item.Status}}</td>
+                  <td style="color:red">{{item.error}}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

@@ -4,7 +4,7 @@ import { MainComponent } from './admin-components/main/main.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'manage-user',
+    redirectTo: 'users',
     pathMatch: 'full'
   },
   {
@@ -16,7 +16,7 @@ const routes: Routes = [
         loadChildren: () => import('../admin/admin-modules/rectification/rectification.module').then(recti => recti.RectificationModule)
       },
       {
-        path: 'manage-user',
+        path: 'users',
         loadChildren: () => import('../admin/admin-modules/manage-users/manage-users.module').then(user => user.ManageUsersModule)
       },
       {

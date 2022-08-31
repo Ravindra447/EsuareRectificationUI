@@ -27,6 +27,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [],
@@ -42,7 +43,8 @@ import { MatRadioModule } from '@angular/material/radio';
     MatFormFieldModule,
     MatTableModule, MatDialogModule, MatTabsModule, MatExpansionModule, MatBadgeModule,
     MatMenuModule,MatRadioModule,
-    HttpClientModule,MatSnackBarModule, MatDividerModule
+    HttpClientModule,MatSnackBarModule, MatDividerModule,
+    NgxPaginationModule
   ],
   exports: [
     FormsModule, ReactiveFormsModule,
@@ -55,7 +57,8 @@ import { MatRadioModule } from '@angular/material/radio';
     MatFormFieldModule, MatBadgeModule,
     MatExpansionModule,
     MatTableModule, MatDialogModule, MatTabsModule,
-    MatMenuModule,MatRadioModule,MatSnackBarModule, MatDividerModule
+    MatMenuModule,MatRadioModule,MatSnackBarModule, MatDividerModule,
+    NgxPaginationModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

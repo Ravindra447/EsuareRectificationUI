@@ -7,10 +7,11 @@ export class TitlesService {
 
   public titles = {
     admin_upload_rectification: "Upload Rectification File",
-    view_rectification: "View Rectification"
-  }
-  public tooltip = {
-    mat_add_rectification: "Add Rectification",
+    view_rectification: "View Rectification",
+    admin_add_user:"Add User",
+    admin_manage_user:"Users",
+    admin_update_user:"Update User",
+
   }
   public btn = {
     submit: "Submit",
@@ -24,6 +25,15 @@ export class TitlesService {
     login: "Login",
     delete_image: "Delete Image",
     update_image: "Update Image"
+
+  }
+  public tooltip={
+    mat_add_rectification: "Add Rectification",
+    mat_view:"View/Edit",
+    mat_delete:"Delete",
+    mat_close:"Close",
+    mat_add_publication:"Add/update",
+    mat_add_user:"Create User",
 
   }
   isLoggedIn() {

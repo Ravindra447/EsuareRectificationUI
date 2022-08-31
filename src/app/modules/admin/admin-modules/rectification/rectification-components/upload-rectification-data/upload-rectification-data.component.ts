@@ -3,7 +3,8 @@ import { TitlesService } from '../../../../../../Services/Titles-Icons-Manage/ti
 import { IconsService } from '../../../../../../Services/Titles-Icons-Manage/icons.service';
 
 import * as XLSX from 'xlsx';
-
+import * as _moment from 'moment';
+const moment = _moment;
 @Component({
   selector: 'app-upload-rectification-data',
   templateUrl: './upload-rectification-data.component.html',
@@ -16,11 +17,20 @@ export class UploadRectificationDataComponent implements OnInit {
   fileAttr = 'Choose File';
   file: any;
   wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
+
+  finalData = [];
+  errorLength = 0;
+  //ngx-pagination
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  p: number = 1;
+
   constructor(public titleService: TitlesService,
     public iconService: IconsService) { }
 
   ngOnInit() { }
-
+  pagination(event) {
+    this.p = event;
+  }
   uploadFileEvt(event: any) {
     console.log(event)
     if (event.target.files && event.target.files[0]) {
@@ -30,15 +40,39 @@ export class UploadRectificationDataComponent implements OnInit {
       const reader: FileReader = new FileReader();
       reader.onload = (e: any) => {
         const bstr = e.target.result;
-        const wb = XLSX.read(JSON.parse(JSON.stringify(bstr)), { type: 'binary' });
-        let finalData = [];
+        const wb = XLSX.read(JSON.parse(JSON.stringify(bstr)), { type: 'binary', cellDates: true });
+        // wb.Workbook.WBProps.date1904;
+        this.finalData = [];
         wb.SheetNames.forEach((sheet => {
           let rowObject = XLSX.utils.sheet_to_json(wb.Sheets[sheet], {
             raw: false,
-           });
-          finalData.push(rowObject);
+          });
+          console.log(rowObject);
+          this.finalData = rowObject;
         }))
-        console.log(finalData)
+        console.log(this.finalData);
+        this.finalData.map(item => {
+          console.log()
+          if (item.DateOfComplaint == undefined || item.DateOfComplaint == "") {
+            item['error'] = "DateOfComplaint is required";
+            this.errorLength++;
+          } else if (moment(item.DateOfComplaint).format('DD/MM/YYYY') == "Invalid date") {
+            item['error'] = "DateOfComplaint is Invalid";
+            this.errorLength++;
+          } else {
+            item.DateOfComplaint = moment(item.DateOfComplaint).format('DD/MM/YYYY');
+          }
+          if (item.Status == "Rectified" && (item.DateOfRectification == undefined || item.DateOfRectification == "")) {
+            this.errorLength++;
+            item['error'] = "DateOfRectification is required";
+          } else if (moment(item.DateOfRectification).format('DD/MM/YYYY') == "Invalid date") {
+            item['error'] = "DateOfRectification is Invalid";
+            this.errorLength++;
+          } else {
+            item.DateOfRectification = moment(item.DateOfRectification).format('DD/MM/YYYY');
+          }
+        });
+        console.log(this.finalData, this.errorLength);
       };
       reader.readAsBinaryString(event.target.files[0]);
     } else {
@@ -48,26 +82,32 @@ export class UploadRectificationDataComponent implements OnInit {
   uploadFun() {
     this.fileInput.nativeElement.value = '';
   }
-  downloadSampleXLXSFile(){
-    let data=[{
-      NameOfULB:'',
-      District:'',
-      WardNo:'',
-      Location:'',
-      PoleNumber:'',
-      Wattage:'',
-      CauseOfComplaint:'',
-      DateOfComplaint:'',
-      DateOfRectification:'',
-      Category:'',
-      Status:''
+  removefile() {
+    console.log("test")
+    this.fileInput.nativeElement.value = '';
+    this.fileAttr = 'Choose File';
+    this.errorLength = 0;
+    this.finalData = [];
+  }
+  downloadSampleXLXSFile() {
+    let data = [{
+      NameOfULB: '',
+      District: '',
+      WardNo: '',
+      Location: '',
+      PoleNumber: '',
+      Wattage: '',
+      CauseOfComplaint: '',
+      DateOfComplaint: '',
+      DateOfRectification: '',
+      Category: '',
+      Status: ''
     }]
-    const ws: XLSX.WorkSheet =XLSX.utils.json_to_sheet(data);
- 
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
- 
-    /* save to file */  
+
+    /* save to file */
     XLSX.writeFile(wb, 'rectification.xlsx');
   }
   goBack() {
