@@ -7,13 +7,58 @@
           <!-- *ngIf="titleService.isLoggedIn()" -->
           <div class="icon add-icon">
             <i class="{{iconService.fa_icons.plus}}" aria-hidden="true"
-              matTooltip="{{titleService.tooltip.mat_add_rectification}}" routerLink="/esuare/rectification/upload"></i>
+              matTooltip="{{titleService.tooltip.mat_add_rectification}}" routerLink="/esquare/rectification/upload"></i>
           </div>
         </div>
         <div class="card-body">
-          
+          <div class="table-responsive" style="margin-top:20px ;">
+            <table class="table table-borderless">
+              <thead>
+                <tr>
+                  <th>NameOfULB</th>
+                  <th>District</th>
+                  <th>WardNo</th>
+                  <th>Location</th>
+                  <th>PoleNumber</th>
+                  <th>Wattage</th>
+                  <th>CauseOfComplaint</th>
+                  <th>DateOfComplaint</th>
+                  <th>DateOfRectification</th>
+                  <th>Category</th>
+                  <th>Status</th>
+                  <th>Action</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of finalData">
+                  <td>{{item.NameOfULB}}</td>
+                  <td>{{item.District}}</td>
+                  <td>{{item.WardNo}}</td>
+                  <td>{{item.Location}}</td>
+                  <td>{{item.PoleNumber}}</td>
+                  <td>{{item.Wattage}}</td>
+                  <td>{{item.CauseOfComplaint}}</td>
+                  <td>{{item.DateOfComplaint}}</td>
+                  <td>{{item.DateOfRectification}}</td>
+                  <td>{{item.Category}}</td>
+                  <td>{{item.Status}}</td>
+                  <td>
+                    <i matTooltip="{{titleService.tooltip.mat_view}}"
+                        class="{{iconService.fa_icons.edit}}"
+                        (click)="editFun(item)"></i>&nbsp;&nbsp;
+                    <i matTooltip="{{titleService.tooltip.mat_delete}}"
+                        class="{{iconService.fa_icons.delete}}" (click)="deleteFun(item)"></i>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+<div class="loading-indicator" *ngIf="spinnerloader">
+  <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
 </div>

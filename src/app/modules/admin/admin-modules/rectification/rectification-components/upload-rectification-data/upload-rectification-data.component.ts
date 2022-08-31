@@ -5,6 +5,10 @@ import { IconsService } from '../../../../../../Services/Titles-Icons-Manage/ico
 import * as XLSX from 'xlsx';
 import * as _moment from 'moment';
 const moment = _moment;
+
+import { ToastrService } from 'ngx-toastr';
+import { RectificationService } from '../../../../../../services/API/rectification.service';
+
 @Component({
   selector: 'app-upload-rectification-data',
   templateUrl: './upload-rectification-data.component.html',
@@ -17,7 +21,6 @@ export class UploadRectificationDataComponent implements OnInit {
   fileAttr = 'Choose File';
   file: any;
   wopts: XLSX.WritingOptions = { bookType: 'xlsx', type: 'array' };
-
   finalData = [];
   errorLength = 0;
   //ngx-pagination
@@ -25,14 +28,15 @@ export class UploadRectificationDataComponent implements OnInit {
   p: number = 1;
 
   constructor(public titleService: TitlesService,
-    public iconService: IconsService) { }
+    public iconService: IconsService,
+    private apiService: RectificationService,
+    private toastr: ToastrService) { }
 
   ngOnInit() { }
   pagination(event) {
     this.p = event;
   }
   uploadFileEvt(event: any) {
-    console.log(event)
     if (event.target.files && event.target.files[0]) {
       this.file = event.target.files[0];
       this.fileAttr = '';
@@ -47,12 +51,12 @@ export class UploadRectificationDataComponent implements OnInit {
           let rowObject = XLSX.utils.sheet_to_json(wb.Sheets[sheet], {
             raw: false,
           });
-          console.log(rowObject);
+          // console.log(rowObject);
           this.finalData = rowObject;
         }))
-        console.log(this.finalData);
+        // console.log(this.finalData);
         this.finalData.map(item => {
-          console.log()
+          // console.log(item.DateOfRectification)
           if (item.DateOfComplaint == undefined || item.DateOfComplaint == "") {
             item['error'] = "DateOfComplaint is required";
             this.errorLength++;
@@ -68,8 +72,10 @@ export class UploadRectificationDataComponent implements OnInit {
           } else if (moment(item.DateOfRectification).format('DD/MM/YYYY') == "Invalid date") {
             item['error'] = "DateOfRectification is Invalid";
             this.errorLength++;
-          } else {
+          } else if (item.DateOfRectification != undefined && item.DateOfRectification != "") {
             item.DateOfRectification = moment(item.DateOfRectification).format('DD/MM/YYYY');
+          } else {
+            item.DateOfRectification = "";
           }
         });
         console.log(this.finalData, this.errorLength);
@@ -80,10 +86,28 @@ export class UploadRectificationDataComponent implements OnInit {
     }
   }
   uploadFun() {
-    this.fileInput.nativeElement.value = '';
+    if (this.errorLength == 0 && this.finalData.length > 0) {
+      this.spinnerloader = true;
+      this.apiService.createRectification(this.finalData).subscribe((result: any) => {
+        if (result.success) {
+          this.spinnerloader = false;
+          this.toastr.info(result.msg);
+        }
+      }, error => {
+        this.spinnerloader = false;
+        this.toastr.error('Internal server error.');
+      })
+
+    } else {
+      if (this.errorLength != 0) {
+        this.toastr.error('File contains errors');
+      }
+      if (this.finalData.length == 0) {
+        this.toastr.info('File contains no data');
+      }
+    }
   }
   removefile() {
-    console.log("test")
     this.fileInput.nativeElement.value = '';
     this.fileAttr = 'Choose File';
     this.errorLength = 0;

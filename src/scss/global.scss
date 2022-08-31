@@ -88,6 +88,24 @@ mat-panel-title {
   min-height: 300px;
 }
 
+.table-responsive::-webkit-scrollbar-track,
+.dialog::-webkit-scrollbar-track {
+    border-radius: 10px;
+    // background-color: #F5F5F5;
+}
+.table-responsive::-webkit-scrollbar,
+.dialog ::-webkit-scrollbar {
+    width: 3px;
+    height: 2px;
+    // background-color: #F5F5F5;
+}
+
+.table-responsive::-webkit-scrollbar-thumb,
+.dialog::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: lightgray;
+}
+
 //Add icon
 .add-icon {
   position: absolute;

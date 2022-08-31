@@ -8,6 +8,8 @@ export class TitlesService {
   public titles = {
     admin_upload_rectification: "Upload Rectification File",
     view_rectification: "View Rectification",
+    update_rectification: "update Rectification",
+
     admin_add_user:"Add User",
     admin_manage_user:"Users",
     admin_update_user:"Update User",
