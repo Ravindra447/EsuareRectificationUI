@@ -4,7 +4,9 @@ import { IconsService } from '../../../../../../Services/Titles-Icons-Manage/ico
 import { RectificationService } from '../../../../../../services/API/rectification.service';
 import { DataShareService } from '../../../../../../services/Utils/data-share.service';
 import { MatDialog } from '@angular/material/dialog';
-import { UpdateRectificationComponent } from '../update-rectification/update-rectification.component'
+import { UpdateRectificationComponent } from '../update-rectification/update-rectification.component';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-view-rectification',
   templateUrl: './view-rectification.component.html',
@@ -18,6 +20,7 @@ export class ViewRectificationComponent implements OnInit {
     private dataShareService: DataShareService,
     private apiService: RectificationService,
     public dialog: MatDialog,
+    private toastr: ToastrService,
     public iconService: IconsService) { }
 
   ngOnInit() {
@@ -36,7 +39,18 @@ export class ViewRectificationComponent implements OnInit {
     });
   }
   deleteFun(item) {
-
+    console.log(item);
+    this.spinnerloader = true;
+    this.apiService.deleteRectificationById(item._id).subscribe((result: any) => {
+      if (result.success) {
+        this.finalData.splice(this.finalData.findIndex(obj => obj._id === item._id), 1);
+        this.spinnerloader = false;
+        this.toastr.warning(result.msg);
+      }
+    }, error => {
+      this.spinnerloader = false;
+      this.toastr.error('Internal server error.');
+    })
   }
   fetchRectifications() {
     this.spinnerloader = true;

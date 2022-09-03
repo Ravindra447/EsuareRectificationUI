@@ -19,16 +19,18 @@
                   multiple="single" accept=".xlsx" />
               </mat-form-field>
             </div>
-            <div class="col-md-10 col-12">
-              <Strong>Note:&nbsp;</Strong>Download XLSX sample file <strong><a style="color:#a4508b;"
-                (click)="downloadSampleXLXSFile()">Click here</a></strong>
+            <div class="col-12" *ngIf="errorLength>0">
+              <p style="color: red;">File contains&nbsp;{{errorLength}}&nbsp;error record.</p>
             </div>
-            <div class="col-md-2 col-12" align="end">
+            <div class="col-md-12 stepper-btns">
+              <button class="btn btn-cancel" (click)="goBack()">Cancel</button>&nbsp;
               <button type="submit" (click)="uploadFun()"
                 class="btn btn-small custom-button pull-right">{{titleService.btn.submit}}</button>
             </div>
-            <div class="col-12" *ngIf="errorLength>0">
-              <p style="color: red;">File contains&nbsp;{{errorLength}}&nbsp;error record.</p>
+
+            <div class="col-md-12 col-12" style="margin-top: 20px;">
+              <Strong>Note:&nbsp;</Strong>Download XLSX sample file <strong><a style="color:#a4508b;"
+                  (click)="downloadSampleXLXSFile()">Click here</a></strong>
             </div>
           </div>
           <div class="table-responsive" *ngIf="errorLength>0" style="margin-top:20px ;">

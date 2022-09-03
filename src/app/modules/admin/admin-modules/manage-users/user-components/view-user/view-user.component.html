@@ -26,7 +26,7 @@
                             </thead>
                             <tbody *ngFor="let item of allUsers | paginate: { itemsPerPage: 10, currentPage: p };">
                                 <!-- | paginate: { itemsPerPage: 10, currentPage: p } -->
-                                <tr *ngIf="item.user_email!=='admin@gmail.com'">
+                                <tr *ngIf="item.user_email!=='mainadmin@gmail.com'">
                                     <td>{{item.user_name}}</td>
                                     <td>{{item.user_email}}</td>
                                     <td>{{item.user_mobile}}</td>

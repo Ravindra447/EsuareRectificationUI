@@ -23,7 +23,7 @@ export class ViewUserComponent implements OnInit {
   constructor(public titleService: TitlesService,
     public iconService: IconsService,
     private userApiService: UserApiService,
-    private dataShareService:DataShareService,
+    private dataShareService: DataShareService,
     private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
@@ -32,14 +32,14 @@ export class ViewUserComponent implements OnInit {
   pagination(event) {
     this.p = event;
   }
-  editUserFun(item){
+  editUserFun(item) {
     this.dataShareService.changeData(item);
     this.router.navigate(['esquare/users/update-user']);
   }
-  deleteUserFun(item){
+  deleteUserFun(item) {
     console.log(item);
     this.spinnerloader = true;
-    this.userApiService.deleteUserById(item._id).subscribe((result:any)=>{
+    this.userApiService.deleteUserById(item._id).subscribe((result: any) => {
       if (result.success) {
         this.allUsers.splice(this.allUsers.findIndex(obj => obj._id === item._id), 1);
         this.spinnerloader = false;
@@ -50,31 +50,32 @@ export class ViewUserComponent implements OnInit {
       this.toastr.error('Internal server error.');
     })
   }
-  fetchUsers(){
+  fetchUsers() {
     this.spinnerloader = true;
-    this.userApiService.fetchAllusers().subscribe((result:any)=>{
+    this.userApiService.fetchAllusers().subscribe((result: any) => {
+      console.log(result.data);
       if (result.success) {
         this.spinnerloader = false;
-        this.allUsers=result.data;
+        this.allUsers = result.data;
       }
     }, error => {
       this.spinnerloader = false;
       this.toastr.error('Internal server error.');
     })
   }
-  updateUserStatus(event,item){
-    console.log(event.checked,item);
-    let obj=item;
-    obj.user_active_status=event.checked,item
-    this.spinnerloader=true;
-    this.userApiService.updateUser(obj).subscribe((result:any)=>{
-      if(result.success){
-        this.spinnerloader=false;
+  updateUserStatus(event, item) {
+    console.log(event.checked, item);
+    let obj = item;
+    obj.user_active_status = event.checked, item
+    this.spinnerloader = true;
+    this.userApiService.updateUser(obj).subscribe((result: any) => {
+      if (result.success) {
+        this.spinnerloader = false;
         this.toastr.info(result.msg);
       }
     }, error => {
-        this.spinnerloader = false;
-        this.toastr.error('Internal server error.');
-      })
+      this.spinnerloader = false;
+      this.toastr.error('Internal server error.');
+    })
   }
 }
