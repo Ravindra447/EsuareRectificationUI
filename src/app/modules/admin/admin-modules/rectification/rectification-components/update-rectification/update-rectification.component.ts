@@ -8,22 +8,35 @@ import { RectificationService } from '../../../../../../services/API/rectificati
 import { DataShareService } from '../../../../../../services/Utils/data-share.service';
 import * as _moment from 'moment';
 const moment = _moment;
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-update-rectification',
   templateUrl: './update-rectification.component.html',
   styleUrls: ['./update-rectification.component.scss'],
 })
 export class UpdateRectificationComponent implements OnInit {
-
+  rectificationFormGroup: FormGroup;
   constructor(public titleService: TitlesService,
     public iconService: IconsService,
     private apiService: RectificationService,
+    private _formBuilder: FormBuilder,
     private dataShareService:DataShareService,
     private toastr: ToastrService,
     public dialogRef: MatDialogRef<UpdateRectificationComponent>
     ) { }
 
     ngOnInit(): void {
+      this.rectificationData();
+      this.rectificationFormGroup = this._formBuilder.group({
+        NameOfULB: ['', [Validators.required]],
+      });
+      
+    }
+    onNoClick() {
+      this.dialogRef.close();
+    }
+    rectificationData(){
       this.dataShareService.currentData.subscribe((data: any) => {
         if (data === 'no data') {
           this.dialogRef.close();
@@ -31,9 +44,6 @@ export class UpdateRectificationComponent implements OnInit {
           console.log(data);
         }
       })
-    }
-    onNoClick() {
-      this.dialogRef.close();
     }
 
 }

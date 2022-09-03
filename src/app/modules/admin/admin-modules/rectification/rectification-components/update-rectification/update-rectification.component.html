@@ -1,12 +1,41 @@
 <div class="main-container">
   <div class="card dialog">
-      <div class="card-header card-header-primary">
-          <h5 class="card-title">{{titleService.titles.update_rectification}}</h5>
-          <div class="icon add-icon">
-              <i class="{{iconService.fa_icons.remove}}" aria-hidden="true" matTooltip="{{titleService.tooltip.mat_close}}" (click)="onNoClick()"></i>
+    <div class="card-header card-header-primary">
+      <h5 class="card-title">{{titleService.titles.update_rectification}}</h5>
+      <div class="icon add-icon">
+        <i class="{{iconService.fa_icons.remove}}" aria-hidden="true" matTooltip="{{titleService.tooltip.mat_close}}"
+          (click)="onNoClick()"></i>
+      </div>
+    </div>
+    <div class="card-body profile-header">
+      <form [formGroup]="rectificationFormGroup">
+        <div class="row">
+          <div class="col-md-4 col-12">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Name of ULB" autocomplete="new-password" type="text" formControlName="NameOfULB"
+                name="NameOfULB" required readonly>
+            </mat-form-field>
           </div>
-      </div>
-      <div class="card-body profile-header">
-      </div>
+          <div class="col-md-4 col-12">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Ward Number" autocomplete="new-password" type="text" formControlName="WardNo"
+                name="WardNo" required readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4 col-12">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Location" autocomplete="new-password" type="text" formControlName="Location"
+                name="Location" required readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4 col-12">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="PoleNumber" autocomplete="new-password" type="text" formControlName="PoleNumber"
+                name="PoleNumber" required readonly>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

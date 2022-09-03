@@ -20,16 +20,21 @@ export class SideNavComponent implements OnInit {
       shareReplay()
     );
   menuItems: any = [];
+  userDetails:any;
   constructor(
     private breakpointObserver: BreakpointObserver,
     public dialog: MatDialog,
     private router: Router,
     private navService: SideNavService) { }
   ngOnInit(): void {
+    this.userDetails=JSON.parse(localStorage.getItem('userDetails'));
     this.fetchNav();
   }
   fetchNav() {
+    if(this.userDetails)
       this.getSideNavbarItems();
+    else
+      this.router.navigateByUrl('login');
   }
   getSideNavbarItems() {
     this.menuItems = this.navService.getSideNavbarItems();
@@ -38,6 +43,10 @@ export class SideNavComponent implements OnInit {
     if (this.drawer._mode == 'over') {
       this.drawer.close();
     }
+  }
+  logoutFun(){
+    this.router.navigateByUrl('login');
+    localStorage.clear();
   }
   
 }

@@ -51,12 +51,10 @@ export class UploadRectificationDataComponent implements OnInit {
           let rowObject = XLSX.utils.sheet_to_json(wb.Sheets[sheet], {
             raw: false,
           });
-          // console.log(rowObject);
           this.finalData = rowObject;
         }))
-        // console.log(this.finalData);
         this.finalData.map(item => {
-          // console.log(item.DateOfRectification)
+          item['user_id']=JSON.parse(localStorage.getItem('userDetails')).user_id;
           if (item.DateOfComplaint == undefined || item.DateOfComplaint == "") {
             item['error'] = "DateOfComplaint is required";
             this.errorLength++;
