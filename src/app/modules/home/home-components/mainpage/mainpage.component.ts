@@ -28,7 +28,7 @@ export class MainpageComponent implements OnInit {
       if (result.success) {
         if (this.userDetails.user_role === 'super_admin') {
           this.ulbURLSData = result.data;
-          this.ulbUrl = result.data[0].ulb_url;
+          this.ulbUrl = this.ulbURLSData.length > 0 ? result.data[0].ulb_url:'';
         } else {
           this.ulbURLSData = result.data.filter((item) => {
             return item.ulb_name.toLowerCase() == this.userDetails.user_ulb.toLowerCase()
