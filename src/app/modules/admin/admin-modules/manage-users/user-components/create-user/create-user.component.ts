@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { TitlesService } from '../../../../../../Services/Titles-Icons-Manage/titles.service';
-import { IconsService } from '../../../../../../Services/Titles-Icons-Manage/icons.service';
+import { TitlesService } from '../../../../../../services/Titles-Icons-Manage/titles.service';
+import { IconsService } from '../../../../../../services/Titles-Icons-Manage/icons.service';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from "@angular/router";
 import { ToastrService } from 'ngx-toastr';
 
-import { UserApiService } from '../../../../../../Services/API/user-api.service';
+import { UserApiService } from '../../../../../../services/API/user-api.service';
 @Component({
   selector: 'app-create-user',
   templateUrl: './create-user.component.html',
@@ -18,56 +18,7 @@ export class CreateUserComponent implements OnInit {
   spinnerloader: Boolean = false;
 
   userRoles = ['admin', 'user'];
-  cities: any = [
-    {
-      district: 'Chittoor',
-      city: 'Tirupati'
-    },
-    {
-      district: 'Chittoor',
-      city: 'Chittoor'
-    },
-    {
-      district: 'Chittoor',
-      city: 'Srikalahasti'
-    },
-    {
-      district: 'Kadapa',
-      city: 'Rajampet'
-    },
-    {
-      district: 'Kadapa',
-      city: 'Rayachoty'
-    },
-    {
-      district: 'East Godavari',
-      city: 'Kakinada'
-    },
-    {
-      district: 'East Godavari',
-      city: 'Rajamahedravaram'
-    },
-    // {
-    //   district: 'Krishna',
-    //   city: 'Vijayawada'
-    // },
-    // {
-    //   district: 'Guntur',
-    //   city: 'Guntur'
-    // },
-    // {
-    //   district: 'Guntur',
-    //   city: 'Narasaraopet'
-    // },
-    // {
-    //   district: 'Guntur',
-    //   city: 'Chilakaluripeta'
-    // },
-    // {
-    //   district: 'Guntur',
-    //   city: 'Sattenapalli'
-    // }
-  ];
+  cities: any = [];
   constructor(public titleService: TitlesService,
     public iconService: IconsService,
     private _formBuilder: FormBuilder,
@@ -75,9 +26,10 @@ export class CreateUserComponent implements OnInit {
     private router: Router, private toastr: ToastrService) { }
 
   ngOnInit(): void {
+    this.cities = this.userApiService.cities;
     this.userFormGroup = this._formBuilder.group({
       user_name: ['', [Validators.required]],
-      user_email: ['', [Validators.required,Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
+      user_email: ['', [Validators.required, Validators.pattern(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)]],
       user_mobile: [''],
       user_active_status: [true],
       user_password: ['', [Validators.required]],
@@ -89,7 +41,7 @@ export class CreateUserComponent implements OnInit {
     window.history.back();
   }
   userOnboardFun() {
-    console.log(this.userFormGroup.value)
+    this.spinnerloader = true;
     this.userApiService.createUser(this.userFormGroup.value).subscribe((result: any) => {
       if (result.success) {
         this.spinnerloader = false;

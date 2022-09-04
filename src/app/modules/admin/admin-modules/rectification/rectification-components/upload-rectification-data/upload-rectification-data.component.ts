@@ -58,20 +58,20 @@ export class UploadRectificationDataComponent implements OnInit {
           if (item.DateOfComplaint == undefined || item.DateOfComplaint == "") {
             item['error'] = "DateOfComplaint is required";
             this.errorLength++;
-          } else if (moment(item.DateOfComplaint).format('DD/MM/YYYY') == "Invalid date") {
+          } else if (moment(item.DateOfComplaint).format('MM/DD/YYYY') == "Invalid date") {
             item['error'] = "DateOfComplaint is Invalid";
             this.errorLength++;
           } else {
-            item.DateOfComplaint = moment(item.DateOfComplaint).format('DD/MM/YYYY');
+            item.DateOfComplaint = moment(item.DateOfComplaint).format('MM/DD/YYYY');
           }
           if (item.Status == "Rectified" && (item.DateOfRectification == undefined || item.DateOfRectification == "")) {
             this.errorLength++;
             item['error'] = "DateOfRectification is required";
-          } else if (moment(item.DateOfRectification).format('DD/MM/YYYY') == "Invalid date") {
+          } else if (moment(item.DateOfRectification).format('MM/DD/YYYY') == "Invalid date") {
             item['error'] = "DateOfRectification is Invalid";
             this.errorLength++;
           } else if (item.DateOfRectification != undefined && item.DateOfRectification != "") {
-            item.DateOfRectification = moment(item.DateOfRectification).format('DD/MM/YYYY');
+            item.DateOfRectification = moment(item.DateOfRectification).format('MM/DD/YYYY');
           } else {
             item.DateOfRectification = "";
           }

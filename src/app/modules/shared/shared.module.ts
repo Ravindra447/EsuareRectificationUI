@@ -27,10 +27,13 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatRadioModule } from '@angular/material/radio';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { MatNativeDateModule } from '@angular/material/core';
+import { FooterComponent } from './shared-components/footer/footer.component';
+import { SafePipe } from '../../services/pipes/safe.pipe';
 
 @NgModule({
-  declarations: [],
+  declarations: [FooterComponent, SafePipe],
   imports: [
     CommonModule,
     CommonModule, FormsModule, ReactiveFormsModule,
@@ -42,9 +45,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
     MatListModule, MatProgressSpinnerModule, MatSelectModule, MatSlideToggleModule,
     MatFormFieldModule,
     MatTableModule, MatDialogModule, MatTabsModule, MatExpansionModule, MatBadgeModule,
-    MatMenuModule,MatRadioModule,
-    HttpClientModule,MatSnackBarModule, MatDividerModule,
-    NgxPaginationModule
+    MatMenuModule, MatRadioModule,
+    HttpClientModule, MatSnackBarModule, MatDividerModule,
+    NgxPaginationModule, MatNativeDateModule
   ],
   exports: [
     FormsModule, ReactiveFormsModule,
@@ -57,8 +60,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     MatFormFieldModule, MatBadgeModule,
     MatExpansionModule,
     MatTableModule, MatDialogModule, MatTabsModule,
-    MatMenuModule,MatRadioModule,MatSnackBarModule, MatDividerModule,
-    NgxPaginationModule
+    MatMenuModule, MatRadioModule, MatSnackBarModule, MatDividerModule,
+    NgxPaginationModule, MatNativeDateModule, FooterComponent, SafePipe
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

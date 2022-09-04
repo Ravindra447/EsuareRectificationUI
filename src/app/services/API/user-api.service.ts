@@ -6,6 +6,56 @@ import { ApiUrlService } from '../config/api-url.service';
 })
 export class UserApiService {
   constructor(private httpClient: HttpClient, private api: ApiUrlService) { }
+  cities: any = [
+    {
+      district: 'Chittoor',
+      city: 'Tirupati'
+    },
+    {
+      district: 'Chittoor',
+      city: 'Chittoor'
+    },
+    {
+      district: 'Chittoor',
+      city: 'Srikalahasti'
+    },
+    {
+      district: 'Kadapa',
+      city: 'Rajampet'
+    },
+    {
+      district: 'Kadapa',
+      city: 'Rayachoty'
+    },
+    {
+      district: 'East Godavari',
+      city: 'Kakinada'
+    },
+    {
+      district: 'East Godavari',
+      city: 'Rajamahedravaram'
+    },
+    // {
+    //   district: 'Krishna',
+    //   city: 'Vijayawada'
+    // },
+    // {
+    //   district: 'Guntur',
+    //   city: 'Guntur'
+    // },
+    // {
+    //   district: 'Guntur',
+    //   city: 'Narasaraopet'
+    // },
+    // {
+    //   district: 'Guntur',
+    //   city: 'Chilakaluripeta'
+    // },
+    // {
+    //   district: 'Guntur',
+    //   city: 'Sattenapalli'
+    // }
+  ];
   createUser(userData) {
     return this.httpClient.post(this.api.url + '/create-user', userData);
   }
@@ -29,6 +79,9 @@ export class UserApiService {
   //forgot Password
   forgotPassword(userData) {
     return this.httpClient.post(this.api.url + '/forgot-password', userData);
+  }
+  fetchCities(){
+    return this.cities;
   }
   
   logout(){

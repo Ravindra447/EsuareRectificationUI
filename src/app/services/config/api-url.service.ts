@@ -6,6 +6,6 @@ import { Injectable } from '@angular/core';
 export class ApiUrlService {
 
   constructor() { }
-  url="http://localhost:9003/apis";
+  url = location.origin == 'http://localhost:4200' || location.origin == 'http://localhost:8100' ? 'http://localhost:9003/apis' : 'https://esquare-rectification.herokuapp.com/apis';
 
 }

@@ -4,13 +4,17 @@ import { MainComponent } from './admin-components/main/main.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'users',
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
     path: '',
     component: MainComponent,
     children: [
+      {
+        path: 'home',
+        loadChildren: () => import('../home/home.module').then(home => home.HomeModule)
+      },
       {
         path:'rectification',
         loadChildren: () => import('../admin/admin-modules/rectification/rectification.module').then(recti => recti.RectificationModule)
@@ -20,9 +24,9 @@ const routes: Routes = [
         loadChildren: () => import('../admin/admin-modules/manage-users/manage-users.module').then(user => user.ManageUsersModule)
       },
       {
-        path: 'home',
-        loadChildren: () => import('../home/home.module').then(home => home.HomeModule)
-      }
+        path: 'settings',
+        loadChildren: () => import('../settings/settings.module').then(settings => settings.SettingsModule)
+      },
     ]
   }
 ];

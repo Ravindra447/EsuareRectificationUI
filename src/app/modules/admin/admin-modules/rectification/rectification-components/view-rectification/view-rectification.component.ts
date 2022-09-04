@@ -14,8 +14,9 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ViewRectificationComponent implements OnInit {
   spinnerloader: Boolean = false;
-
+  showAdd: Boolean = true;
   finalData: any = [];
+  userDetails: any;
   constructor(public titleService: TitlesService,
     private dataShareService: DataShareService,
     private apiService: RectificationService,
@@ -24,6 +25,10 @@ export class ViewRectificationComponent implements OnInit {
     public iconService: IconsService) { }
 
   ngOnInit() {
+    this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    if (this.userDetails.user_role === 'user') {
+      this.showAdd = false;
+    }
     this.fetchRectifications();
   }
   editFun(item) {
@@ -57,7 +62,12 @@ export class ViewRectificationComponent implements OnInit {
     this.apiService.fetchAllRectifications().subscribe((result: any) => {
       if (result.success) {
         this.spinnerloader = false;
-        this.finalData = result.data;
+        if (this.userDetails.user_role != 'super_admin')
+          this.finalData = result.data.filter((item) =>{
+            return item.NameOfULB.toLowerCase() == this.userDetails.user_ulb.toLowerCase()
+          });
+        else
+          this.finalData = result.data;
       }
     }, error => {
       this.spinnerloader = false;

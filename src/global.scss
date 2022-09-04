@@ -62,7 +62,7 @@ $esquare-prod-ui-theme: mat.define-light-theme(
 
 .dashboard-logo {
   margin-top: 20px;
-  width: 200px !important;
+  width: 80px !important;
   height: 50px !important;
   cursor: pointer;
   // margin: 10px 10px 0 10px;
@@ -152,24 +152,81 @@ $esquare-prod-ui-theme: mat.define-light-theme(
   margin-top: 100px;
 }
 
-// main site footer
+/*Footer*/
+
 .footer {
-  padding-top: 80px;
-  padding-bottom: 40px;
-  background: $main-footer-background;
+  position: relative;
+  bottom: 0 !important;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 0px;
+  // height: 60px;
+  /* Set the fixed height of the footer here */
+  // line-height: 60px;
+  /* Vertically center the text there */
+  // margin-top: 100px;
 }
 
-.footer-widget ul li {
-  margin-bottom: 15px;
+.footer .copyright {
+  color: #fff;
+  font-size: 0.8rem;
+  // margin-right: 10px;
 }
 
-.footer-widget ul li a {
-  color: $main-footer-widget;
+.footer-icon {
+  font-size: 1rem;
+}
+.count-page {
+  position: relative;
+  overflow-x: hidden;
+  background: $card-header-background-color !important;
+  top: 0;
+  left: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100px;
+  border-radius: 0% !important;
+}
+.footer-logo {
+  margin-top: 20px;
+  width: 120px !important;
+  height: 50px !important;
+  cursor: pointer;
+  // margin: 10px 10px 0 10px;
+  // box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
 }
 
-.footer-widget ul li a:hover {
-  color: $radio-color;
+.mat-tab-body-content {
+  overflow: hidden !important;
 }
-.copyright {
-  color: $footer-color;
+
+.setting-form {
+  margin: 20px 0px !important;
+}
+
+.mat-expansion-panel-header {
+  background: $card-header-background-color !important;
+}
+
+.mat-tab-label.mat-tab-label-active {
+  background-color: $mat-tab-background-active-color;
+}
+
+.mat-tab-label {
+  color: #fff!important;
+  opacity: 1.6!important;
+}
+
+.mat-tab-labels {
+  background: $mat-tab-background-color;
+  color: $mat-tab-text-color;
+  opacity: 1.6!important;
+}
+
+.mat-tab-label,
+.mat-tab-link {
+  font-family: 'Montserrat', sans-serif !important;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 1px;
 }

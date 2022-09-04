@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { TitlesService } from '../../../../../../Services/Titles-Icons-Manage/titles.service';
-import { IconsService } from '../../../../../../Services/Titles-Icons-Manage/icons.service';
+import { TitlesService } from '../../../../../../services/Titles-Icons-Manage/titles.service';
+import { IconsService } from '../../../../../../services/Titles-Icons-Manage/icons.service';
 
 import { Router } from "@angular/router";
 import { ToastrService } from 'ngx-toastr';
 import { UserApiService } from '../../../../../../services/API/user-api.service';
 //datashare service
 import { DataShareService } from '../../../../../../services/Utils/data-share.service';
+
 @Component({
   selector: 'app-view-user',
   templateUrl: './view-user.component.html',

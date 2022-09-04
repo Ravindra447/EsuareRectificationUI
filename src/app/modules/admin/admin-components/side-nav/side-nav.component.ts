@@ -20,33 +20,48 @@ export class SideNavComponent implements OnInit {
       shareReplay()
     );
   menuItems: any = [];
-  userDetails:any;
+  userDetails: any;
   constructor(
     private breakpointObserver: BreakpointObserver,
     public dialog: MatDialog,
     private router: Router,
     private navService: SideNavService) { }
   ngOnInit(): void {
-    this.userDetails=JSON.parse(localStorage.getItem('userDetails'));
+    this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
     this.fetchNav();
   }
   fetchNav() {
-    if(this.userDetails)
+    if (this.userDetails)
       this.getSideNavbarItems();
     else
       this.router.navigateByUrl('login');
   }
   getSideNavbarItems() {
     this.menuItems = this.navService.getSideNavbarItems();
-  }
-  closeSideNav() {
-    if (this.drawer._mode == 'over') {
-      this.drawer.close();
+    if (this.userDetails.user_role === 'super_admin'){
+      this.menuItems.map(item => {
+        if (item.nav_path === 'users' || item.nav_path === 'settings' ) {
+          item.nav_isAccess = true;
+        }
+      })
+    }else{
+      this.menuItems.map(item => {
+        if (item.nav_path === 'users' || item.nav_path === 'settings' ) {
+          item.nav_isAccess = false;
+        }
+      })
     }
   }
-  logoutFun(){
-    this.router.navigateByUrl('login');
-    localStorage.clear();
+  closeSideNav() {
+    // if(this.router.url==='/esquare/home')
+    // if (this.drawer._mode == 'over') {
+      this.drawer.close();
+    // }
   }
-  
+  logoutFun() {
+    localStorage.clear();
+    this.getSideNavbarItems();
+    this.router.navigateByUrl('login');
+  }
+
 }

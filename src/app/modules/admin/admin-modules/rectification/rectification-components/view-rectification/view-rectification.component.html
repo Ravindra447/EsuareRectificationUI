@@ -4,8 +4,8 @@
       <div class="card">
         <div class="card-header card-header-primary">
           <h5 class="card-title">{{titleService.titles.view_rectification}}</h5>
-          <!-- *ngIf="titleService.isLoggedIn()" -->
-          <div class="icon add-icon">
+          <!-- -->
+          <div class="icon add-icon" *ngIf="showAdd" >
             <i class="{{iconService.fa_icons.plus}}" aria-hidden="true"
               matTooltip="{{titleService.tooltip.mat_add_rectification}}" routerLink="/esquare/rectification/upload"></i>
           </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { TitlesService } from '../../../../../../Services/Titles-Icons-Manage/titles.service';
-import { IconsService } from '../../../../../../Services/Titles-Icons-Manage/icons.service';
+import { TitlesService } from '../../../../../../services/Titles-Icons-Manage/titles.service';
+import { IconsService } from '../../../../../../services/Titles-Icons-Manage/icons.service';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from "@angular/router";
@@ -20,34 +20,6 @@ export class EditUserComponent implements OnInit {
   userRoles = ['admin', 'user'];
 
   cities: any = [
-    {
-      district: 'Chittoor',
-      city: 'Tirupati'
-    },
-    {
-      district: 'Chittoor',
-      city: 'Chittoor'
-    },
-    {
-      district: 'Chittoor',
-      city: 'Srikalahasti'
-    },
-    {
-      district: 'Kadapa',
-      city: 'Rajampet'
-    },
-    {
-      district: 'Kadapa',
-      city: 'Rayachoty'
-    },
-    {
-      district: 'East Godavari',
-      city: 'Kakinada'
-    },
-    {
-      district: 'East Godavari',
-      city: 'Rajamahedravaram'
-    }
   ];
   userDetails: any;
   constructor(public titleService: TitlesService,
@@ -58,6 +30,7 @@ export class EditUserComponent implements OnInit {
     private router: Router, private toastr: ToastrService,) { }
 
   ngOnInit(): void {
+    this.cities = this.userApiService.cities;
     this.userFormGroup = this._formBuilder.group({
       user_name: ['', [Validators.required]],
       user_email: ['', [Validators.required]],
@@ -90,13 +63,14 @@ export class EditUserComponent implements OnInit {
         this.router.navigate(['esquare/users/view-users']);
       } else {
         this.userDetails = data;
+        console.log(this.userDetails);
         this.userFormGroup.setValue({
           user_name: data.user_name,
           user_email: data.user_email,
           user_mobile: data.user_mobile,
           user_role: data.user_role,
           user_ulb:data.user_ulb,
-          _id: data
+          _id: data._id
         })
       }
     })

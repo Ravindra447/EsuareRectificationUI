@@ -12,8 +12,8 @@
         <div class="row">
           <div class="col-md-4 col-12">
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Name of ULB" autocomplete="new-password" type="text" formControlName="NameOfULB"
-                name="NameOfULB" required readonly>
+              <input matInput placeholder="Name of ULB" autocomplete="new-password" type="text"
+                formControlName="NameOfULB" name="NameOfULB" required readonly>
             </mat-form-field>
           </div>
           <div class="col-md-4 col-12">
@@ -30,12 +30,54 @@
           </div>
           <div class="col-md-4 col-12">
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="PoleNumber" autocomplete="new-password" type="text" formControlName="PoleNumber"
-                name="PoleNumber" required readonly>
+              <input matInput placeholder="PoleNumber" autocomplete="new-password" type="text"
+                formControlName="PoleNumber" name="PoleNumber" required readonly>
             </mat-form-field>
+          </div>
+          <div class="col-md-4 col-12">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="CauseOfComplaint" autocomplete="new-password" type="text"
+                formControlName="CauseOfComplaint" name="CauseOfComplaint" required readonly>
+            </mat-form-field>
+          </div>
+          <div class="col-md-4 col-12">
+            <mat-form-field class="example-full-width">
+              <mat-select placeholder="Status" type="text" formControlName="Status" name="Status" (selectionChange)="onStatusChange($event)" required>
+                <mat-option *ngFor="let option of rectificationStatus" [value]="option">{{option}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="!rectificationFormGroup.get('Status').valid">Select valid status. </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6 col-12">
+            <mat-form-field class="example-full-width">
+              <input matInput (click)="dp.open()" placeholder="Date of Complaint" [max]="maxDate" [matDatepicker]="dp"
+                formControlName="DateOfComplaint" name="DateOfComplaint" required readonly>
+              <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+              <mat-datepicker  #dp panelClass="example-month-picker">
+              </mat-datepicker>
+              <mat-error *ngIf="!rectificationFormGroup.get('DateOfComplaint').valid">Enter valid date of complaint.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6 col-12">
+            <mat-form-field class="example-full-width">
+              <input matInput (click)="dp1.open()" placeholder="Date of Rectification" [max]="maxDate" [matDatepicker]="dp1"
+                formControlName="DateOfRectification" name="DateOfRectification" readonly>
+              <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+              <mat-datepicker #dp1 panelClass="example-month-picker">
+              </mat-datepicker>
+              <mat-error *ngIf="!rectificationFormGroup.get('DateOfRectification').valid">Enter valid date of Rectification.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-12 stepper-btns">
+            <button class="btn btn-cancel" (click)="onNoClick()">Cancel</button>&nbsp;
+            <button type="submit" (click)="updateFun()" [disabled]="rectificationFormGroup.invalid"
+              class="btn btn-small custom-button pull-right">{{titleService.btn.submit}}</button>
           </div>
         </div>
       </form>
     </div>
   </div>
+</div>
+<div class="loading-indicator" *ngIf="spinnerloader">
+  <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
 </div>
