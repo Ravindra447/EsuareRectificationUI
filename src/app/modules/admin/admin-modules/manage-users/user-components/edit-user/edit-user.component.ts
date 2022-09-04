@@ -16,9 +16,7 @@ import { DataShareService } from '../../../../../../services/Utils/data-share.se
 export class EditUserComponent implements OnInit {
   userFormGroup: FormGroup;
   spinnerloader: Boolean = false;
-
   userRoles = ['admin', 'user'];
-
   cities: any = [
   ];
   userDetails: any;

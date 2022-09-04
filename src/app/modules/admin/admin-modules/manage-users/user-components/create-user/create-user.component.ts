@@ -13,7 +13,7 @@ import { UserApiService } from '../../../../../../services/API/user-api.service'
   styleUrls: ['./create-user.component.scss']
 })
 export class CreateUserComponent implements OnInit {
-
+  hide = true;
   userFormGroup: FormGroup;
   spinnerloader: Boolean = false;
 
