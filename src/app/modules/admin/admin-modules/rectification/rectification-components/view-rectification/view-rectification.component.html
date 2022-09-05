@@ -31,7 +31,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of finalData">
+                <tr *ngFor="let item of finalData | paginate: { itemsPerPage: 20, currentPage: p };">
                   <td>{{item.NameOfULB}}</td>
                   <td>{{item.District}}</td>
                   <td>{{item.WardNo}}</td>
@@ -54,6 +54,11 @@
               </tbody>
             </table>
           </div>
+          <div align="end" style="padding: 0px !important;" *ngIf="finalData.length>20">
+            <pagination-controls (pageChange)="pagination($event)" autoHide="true"
+            responsive="true" previousLabel="" nextLabel="">
+            </pagination-controls>
+        </div>
         </div>
       </div>
     </div>

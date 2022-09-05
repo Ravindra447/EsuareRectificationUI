@@ -17,6 +17,8 @@ export class ViewRectificationComponent implements OnInit {
   showAdd: Boolean = true;
   finalData: any = [];
   userDetails: any;
+  p: number = 1;
+
   constructor(public titleService: TitlesService,
     private dataShareService: DataShareService,
     private apiService: RectificationService,
@@ -30,6 +32,9 @@ export class ViewRectificationComponent implements OnInit {
       this.showAdd = false;
     }
     this.fetchRectifications();
+  }
+  pagination(event) {
+    this.p = event;
   }
   editFun(item) {
     console.log(item);
