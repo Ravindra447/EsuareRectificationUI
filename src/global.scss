@@ -230,3 +230,10 @@ $esquare-prod-ui-theme: mat.define-light-theme(
   font-weight: 400;
   letter-spacing: 1px;
 }
+.toolbar-title{
+  margin-top: 6px !important;
+  color: $nav-selected-background;
+  font-weight: 500;
+  text-transform: capitalize;
+  font-size: 1rem !important;
+}

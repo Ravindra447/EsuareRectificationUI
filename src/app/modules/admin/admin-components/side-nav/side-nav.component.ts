@@ -21,6 +21,7 @@ export class SideNavComponent implements OnInit {
     );
   menuItems: any = [];
   userDetails: any;
+  ULB = '';
   constructor(
     private breakpointObserver: BreakpointObserver,
     public dialog: MatDialog,
@@ -38,15 +39,16 @@ export class SideNavComponent implements OnInit {
   }
   getSideNavbarItems() {
     this.menuItems = this.navService.getSideNavbarItems();
-    if (this.userDetails.user_role === 'super_admin'){
+    if (this.userDetails.user_role === 'super_admin') {
       this.menuItems.map(item => {
-        if (item.nav_path === 'users' || item.nav_path === 'settings' ) {
+        if (item.nav_path === 'users' || item.nav_path === 'settings') {
           item.nav_isAccess = true;
         }
       })
-    }else{
+    } else {
+      this.ULB = this.userDetails.user_ulb
       this.menuItems.map(item => {
-        if (item.nav_path === 'users' || item.nav_path === 'settings' ) {
+        if (item.nav_path === 'users' || item.nav_path === 'settings') {
           item.nav_isAccess = false;
         }
       })
@@ -55,7 +57,7 @@ export class SideNavComponent implements OnInit {
   closeSideNav() {
     // if(this.router.url==='/esquare/home')
     // if (this.drawer._mode == 'over') {
-      this.drawer.close();
+    this.drawer.close();
     // }
   }
   logoutFun() {
