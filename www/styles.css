@@ -2729,6 +2729,13 @@ input[type=number] {
   font-weight: 400;
   letter-spacing: 1px;
 }
+.toolbar-title {
+  margin-top: 6px !important;
+  color: #5f0a87;
+  font-weight: 500;
+  text-transform: capitalize;
+  font-size: 1rem !important;
+}
 /*!*******************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[2]!./node_modules/bootstrap/dist/css/bootstrap.min.css ***!
   \*******************************************************************************************************************************************************************************************************************************************/
