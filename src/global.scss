@@ -168,7 +168,7 @@ $esquare-prod-ui-theme: mat.define-light-theme(
 }
 
 .footer .copyright {
-  color: #fff;
+  color: $footer-color;
   font-size: 0.8rem;
   // margin-right: 10px;
 }
@@ -179,7 +179,7 @@ $esquare-prod-ui-theme: mat.define-light-theme(
 .count-page {
   position: relative;
   overflow-x: hidden;
-  background: $card-header-background-color !important;
+  background: #fff;
   top: 0;
   left: 0;
   padding: 0;
