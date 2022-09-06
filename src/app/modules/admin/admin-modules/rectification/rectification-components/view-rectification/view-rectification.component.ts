@@ -6,6 +6,8 @@ import { DataShareService } from '../../../../../../services/Utils/data-share.se
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateRectificationComponent } from '../update-rectification/update-rectification.component';
 import { ToastrService } from 'ngx-toastr';
+import * as XLSX from 'xlsx';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-view-rectification',
@@ -18,7 +20,10 @@ export class ViewRectificationComponent implements OnInit {
   finalData: any = [];
   userDetails: any;
   p: number = 1;
-
+  rectType: String = '';
+  rectificationDates = ['DateOfComplaint', 'DateOfRectification'];
+  selectedDate: '';
+  rectificationData: any = [];
   constructor(public titleService: TitlesService,
     private dataShareService: DataShareService,
     private apiService: RectificationService,
@@ -32,6 +37,30 @@ export class ViewRectificationComponent implements OnInit {
       this.showAdd = false;
     }
     this.fetchRectifications();
+  }
+  onSelectionChange(event) {
+    this.rectType = event.value;
+    this.filterRectBy(this.rectType, this.selectedDate);
+
+  }
+  checkDate(event) {
+    this.selectedDate = event
+    this.filterRectBy(this.rectType, this.selectedDate);
+  }
+  filterRectBy(type, date) {
+    this.rectType = type;
+    this.selectedDate = date;
+    if (type == '' && date == '') {
+      this.finalData = this.rectificationData;
+    } else if (type != '' && date != '') {
+      this.finalData = this.rectificationData.filter((item) => {
+        return (item[type] == moment(date).format('MM/DD/YYYY'));
+      })
+    } else if (date != '') {
+      this.finalData = this.rectificationData.filter((item) => {
+        return (item.DateOfComplaint == moment(date).format('MM/DD/YYYY') || item.DateOfRectification == moment(date).format('MM/DD/YYYY'));
+      })
+    }
   }
   pagination(event) {
     this.p = event;
@@ -68,15 +97,24 @@ export class ViewRectificationComponent implements OnInit {
       if (result.success) {
         this.spinnerloader = false;
         if (this.userDetails.user_role != 'super_admin')
-          this.finalData = result.data.filter((item) =>{
+          this.rectificationData = result.data.filter((item) => {
             return item.NameOfULB.toLowerCase() == this.userDetails.user_ulb.toLowerCase()
           });
         else
-          this.finalData = result.data;
+          this.rectificationData = result.data;
+
+        this.filterRectBy('', '');
       }
     }, error => {
       this.spinnerloader = false;
     })
   }
-
+  downloadSampleXLXSFile() {
+    let data = this.finalData;
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+    /* save to file */
+    XLSX.writeFile(wb, 'rectification.xlsx');
+  }
 }

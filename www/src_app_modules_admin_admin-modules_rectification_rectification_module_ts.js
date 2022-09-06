@@ -329,17 +329,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ViewRectificationComponent": () => (/* binding */ ViewRectificationComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _view_rectification_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./view-rectification.component.html?ngResource */ 8349);
 /* harmony import */ var _view_rectification_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./view-rectification.component.scss?ngResource */ 6045);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/core */ 2560);
 /* harmony import */ var _Services_Titles_Icons_Manage_titles_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../Services/Titles-Icons-Manage/titles.service */ 7151);
 /* harmony import */ var _Services_Titles_Icons_Manage_icons_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../Services/Titles-Icons-Manage/icons.service */ 171);
 /* harmony import */ var _services_API_rectification_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../../services/API/rectification.service */ 9140);
 /* harmony import */ var _services_Utils_data_share_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../../../services/Utils/data-share.service */ 1028);
-/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/material/dialog */ 1484);
+/* harmony import */ var _angular_material_dialog__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/material/dialog */ 1484);
 /* harmony import */ var _update_rectification_update_rectification_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../update-rectification/update-rectification.component */ 4710);
-/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ngx-toastr */ 4817);
+/* harmony import */ var ngx_toastr__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ngx-toastr */ 4817);
+/* harmony import */ var xlsx__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! xlsx */ 4126);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! moment */ 6908);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_7__);
+
+
 
 
 
@@ -363,6 +368,9 @@ let ViewRectificationComponent = class ViewRectificationComponent {
         this.showAdd = true;
         this.finalData = [];
         this.p = 1;
+        this.rectType = '';
+        this.rectificationDates = ['DateOfComplaint', 'DateOfRectification'];
+        this.rectificationData = [];
     }
     ngOnInit() {
         this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
@@ -370,6 +378,31 @@ let ViewRectificationComponent = class ViewRectificationComponent {
             this.showAdd = false;
         }
         this.fetchRectifications();
+    }
+    onSelectionChange(event) {
+        this.rectType = event.value;
+        this.filterRectBy(this.rectType, this.selectedDate);
+    }
+    checkDate(event) {
+        this.selectedDate = event;
+        this.filterRectBy(this.rectType, this.selectedDate);
+    }
+    filterRectBy(type, date) {
+        this.rectType = type;
+        this.selectedDate = date;
+        if (type == '' && date == '') {
+            this.finalData = this.rectificationData;
+        }
+        else if (type != '' && date != '') {
+            this.finalData = this.rectificationData.filter((item) => {
+                return (item[type] == moment__WEBPACK_IMPORTED_MODULE_7__(date).format('MM/DD/YYYY'));
+            });
+        }
+        else if (date != '') {
+            this.finalData = this.rectificationData.filter((item) => {
+                return (item.DateOfComplaint == moment__WEBPACK_IMPORTED_MODULE_7__(date).format('MM/DD/YYYY') || item.DateOfRectification == moment__WEBPACK_IMPORTED_MODULE_7__(date).format('MM/DD/YYYY'));
+            });
+        }
     }
     pagination(event) {
         this.p = event;
@@ -405,27 +438,36 @@ let ViewRectificationComponent = class ViewRectificationComponent {
             if (result.success) {
                 this.spinnerloader = false;
                 if (this.userDetails.user_role != 'super_admin')
-                    this.finalData = result.data.filter((item) => {
+                    this.rectificationData = result.data.filter((item) => {
                         return item.NameOfULB.toLowerCase() == this.userDetails.user_ulb.toLowerCase();
                     });
                 else
-                    this.finalData = result.data;
+                    this.rectificationData = result.data;
+                this.filterRectBy('', '');
             }
         }, error => {
             this.spinnerloader = false;
         });
+    }
+    downloadSampleXLXSFile() {
+        let data = this.finalData;
+        const ws = xlsx__WEBPACK_IMPORTED_MODULE_8__.utils.json_to_sheet(data);
+        const wb = xlsx__WEBPACK_IMPORTED_MODULE_8__.utils.book_new();
+        xlsx__WEBPACK_IMPORTED_MODULE_8__.utils.book_append_sheet(wb, ws, 'Sheet1');
+        /* save to file */
+        xlsx__WEBPACK_IMPORTED_MODULE_8__.writeFile(wb, 'rectification.xlsx');
     }
 };
 ViewRectificationComponent.ctorParameters = () => [
     { type: _Services_Titles_Icons_Manage_titles_service__WEBPACK_IMPORTED_MODULE_2__.TitlesService },
     { type: _services_Utils_data_share_service__WEBPACK_IMPORTED_MODULE_5__.DataShareService },
     { type: _services_API_rectification_service__WEBPACK_IMPORTED_MODULE_4__.RectificationService },
-    { type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_7__.MatDialog },
-    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_8__.ToastrService },
+    { type: _angular_material_dialog__WEBPACK_IMPORTED_MODULE_9__.MatDialog },
+    { type: ngx_toastr__WEBPACK_IMPORTED_MODULE_10__.ToastrService },
     { type: _Services_Titles_Icons_Manage_icons_service__WEBPACK_IMPORTED_MODULE_3__.IconsService }
 ];
-ViewRectificationComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_10__.Component)({
+ViewRectificationComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_12__.Component)({
         selector: 'app-view-rectification',
         template: _view_rectification_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_view_rectification_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -20055,7 +20097,7 @@ module.exports = ".mat-toolbar-single-row {\n  height: auto !important;\n  backg
 /***/ ((module) => {
 
 "use strict";
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ2aWV3LXJlY3RpZmljYXRpb24uY29tcG9uZW50LnNjc3MifQ== */";
+module.exports = ".fa-download {\n  font-size: 1.3rem;\n  color: #5f0a87;\n  margin-right: 20px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInZpZXctcmVjdGlmaWNhdGlvbi5jb21wb25lbnQuc2NzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNJLGlCQUFBO0VBQ0EsY0FBQTtFQUNBLGtCQUFBO0FBQ0oiLCJmaWxlIjoidmlldy1yZWN0aWZpY2F0aW9uLmNvbXBvbmVudC5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmZhLWRvd25sb2FkIHtcclxuICAgIGZvbnQtc2l6ZTogMS4zcmVtO1xyXG4gICAgY29sb3I6ICM1ZjBhODc7XHJcbiAgICBtYXJnaW4tcmlnaHQ6IDIwcHg7XHJcbn1cclxuIl19 */";
 
 /***/ }),
 
@@ -20088,7 +20130,7 @@ module.exports = "<div class=\"main-container\">\n  <div class=\"row\">\n    <di
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<div class=\"main-container\">\n  <div class=\"row\">\n    <div class=\"col-md-12 col-12\">\n      <div class=\"card\">\n        <div class=\"card-header card-header-primary\">\n          <h5 class=\"card-title\">{{titleService.titles.view_rectification}}</h5>\n          <!-- -->\n          <div class=\"icon add-icon\" *ngIf=\"showAdd\" >\n            <i class=\"{{iconService.fa_icons.plus}}\" aria-hidden=\"true\"\n              matTooltip=\"{{titleService.tooltip.mat_add_rectification}}\" routerLink=\"/esquare/rectification/upload\"></i>\n          </div>\n        </div>\n        <div class=\"card-body\">\n          <div class=\"table-responsive\" style=\"margin-top:20px ;\">\n            <table class=\"table table-borderless\">\n              <thead>\n                <tr>\n                  <th>NameOfULB</th>\n                  <th>District</th>\n                  <th>WardNo</th>\n                  <th>Location</th>\n                  <th>PoleNumber</th>\n                  <th>Wattage</th>\n                  <th>CauseOfComplaint</th>\n                  <th>DateOfComplaint</th>\n                  <th>DateOfRectification</th>\n                  <th>Category</th>\n                  <th>Status</th>\n                  <th>Action</th>\n\n                </tr>\n              </thead>\n              <tbody>\n                <tr *ngFor=\"let item of finalData | paginate: { itemsPerPage: 20, currentPage: p };\">\n                  <td>{{item.NameOfULB}}</td>\n                  <td>{{item.District}}</td>\n                  <td>{{item.WardNo}}</td>\n                  <td>{{item.Location}}</td>\n                  <td>{{item.PoleNumber}}</td>\n                  <td>{{item.Wattage}}</td>\n                  <td>{{item.CauseOfComplaint}}</td>\n                  <td>{{item.DateOfComplaint}}</td>\n                  <td>{{item.DateOfRectification}}</td>\n                  <td>{{item.Category}}</td>\n                  <td>{{item.Status}}</td>\n                  <td>\n                    <i matTooltip=\"{{titleService.tooltip.mat_view}}\"\n                        class=\"{{iconService.fa_icons.edit}}\"\n                        (click)=\"editFun(item)\"></i>&nbsp;&nbsp;\n                    <i matTooltip=\"{{titleService.tooltip.mat_delete}}\"\n                        class=\"{{iconService.fa_icons.delete}}\" (click)=\"deleteFun(item)\"></i>\n                </td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n          <div align=\"end\" style=\"padding: 0px !important;\" *ngIf=\"finalData.length>20\">\n            <pagination-controls (pageChange)=\"pagination($event)\" autoHide=\"true\"\n            responsive=\"true\" previousLabel=\"\" nextLabel=\"\">\n            </pagination-controls>\n        </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<div class=\"loading-indicator\" *ngIf=\"spinnerloader\">\n  <mat-spinner mode=\"indeterminate\" color=\"primary\"></mat-spinner>\n</div>";
+module.exports = "<div class=\"main-container\">\n  <div class=\"row\">\n    <div class=\"col-md-12 col-12\">\n      <div class=\"card\">\n        <div class=\"card-header card-header-primary\">\n          <h5 class=\"card-title\">{{titleService.titles.view_rectification}}</h5>\n          <!-- -->\n          <div class=\"icon add-icon\" *ngIf=\"showAdd\">\n            <i class=\"{{iconService.fa_icons.plus}}\" aria-hidden=\"true\"\n              matTooltip=\"{{titleService.tooltip.mat_add_rectification}}\"\n              routerLink=\"/esquare/rectification/upload\"></i>\n          </div>\n        </div>\n        <div class=\"card-body\">\n          <div class=\"row\">\n            <div class=\"col-md-5 col-12\">\n              <mat-form-field class=\"example-full-width\">\n                <mat-select placeholder=\"filter by\" type=\"text\" [(ngModel)]=\"rectType\" name=\"rectType\"\n                  (selectionChange)=\"onSelectionChange($event)\">\n                  <mat-option *ngFor=\"let option of rectificationDates\" [value]=\"option\">{{option}}</mat-option>\n                </mat-select>\n              </mat-form-field>\n            </div>\n            <div class=\"col-md-5 col-12\">\n              <mat-form-field class=\"example-full-width\">\n                <input matInput (click)=\"dp.open()\" placeholder=\"Date of Complaint\"\n                  (ngModelChange)=\"checkDate($event)\" [matDatepicker]=\"dp\" [(ngModel)]=\"selectedDate\"\n                  name=\"selectedDate\" readonly>\n                <mat-datepicker-toggle matSuffix [for]=\"dp\"></mat-datepicker-toggle>\n                <mat-datepicker #dp panelClass=\"example-month-picker\">\n                </mat-datepicker>\n              </mat-form-field>\n            </div>\n            <div class=\"col-md-2 col-12\">\n              <div class=\"row\" style=\"margin-top: 20px;\">\n                <div class=\"col-6\">\n                  <a (click)=\"filterRectBy('','')\" style=\"color:#5f0a87\">clear</a>\n                </div>\n                <div class=\"col-6 text-end\">\n                  <i class=\"fa fa-download\" aria-hidden=\"true\" (click)=\"downloadSampleXLXSFile()\"></i>\n                </div>\n              </div>\n            </div>\n          </div>\n          <div class=\"table-responsive\" style=\"margin-top:20px ;\">\n            <table class=\"table table-borderless\">\n              <thead>\n                <tr>\n                  <th>NameOfULB</th>\n                  <th>District</th>\n                  <th>WardNo</th>\n                  <th>Location</th>\n                  <th>PoleNumber</th>\n                  <th>Wattage</th>\n                  <th>CauseOfComplaint</th>\n                  <th>DateOfComplaint</th>\n                  <th>DateOfRectification</th>\n                  <th>Category</th>\n                  <th>Status</th>\n                  <th>Action</th>\n\n                </tr>\n              </thead>\n              <tbody>\n                <tr *ngFor=\"let item of finalData | paginate: { itemsPerPage: 20, currentPage: p };\">\n                  <td>{{item.NameOfULB}}</td>\n                  <td>{{item.District}}</td>\n                  <td>{{item.WardNo}}</td>\n                  <td>{{item.Location}}</td>\n                  <td>{{item.PoleNumber}}</td>\n                  <td>{{item.Wattage}}</td>\n                  <td>{{item.CauseOfComplaint}}</td>\n                  <td>{{item.DateOfComplaint?(item.DateOfComplaint| date: 'dd/MM/YYYY'):item.DateOfComplaint}}</td>\n                  <td>{{item.DateOfRectification?(item.DateOfRectification| date: 'dd/MM/YYYY'):item.DateOfRectification}}</td>\n                  <td>{{item.Category}}</td>\n                  <td>{{item.Status}}</td>\n                  <td>\n                    <i matTooltip=\"{{titleService.tooltip.mat_view}}\" class=\"{{iconService.fa_icons.edit}}\"\n                      (click)=\"editFun(item)\"></i>&nbsp;&nbsp;\n                    <i matTooltip=\"{{titleService.tooltip.mat_delete}}\" class=\"{{iconService.fa_icons.delete}}\"\n                      (click)=\"deleteFun(item)\"></i>\n                  </td>\n                </tr>\n              </tbody>\n            </table>\n          </div>\n          <div align=\"end\" style=\"padding: 0px !important;\" *ngIf=\"finalData.length>20\">\n            <pagination-controls (pageChange)=\"pagination($event)\" autoHide=\"true\" responsive=\"true\" previousLabel=\"\"\n              nextLabel=\"\">\n            </pagination-controls>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n<div class=\"loading-indicator\" *ngIf=\"spinnerloader\">\n  <mat-spinner mode=\"indeterminate\" color=\"primary\"></mat-spinner>\n</div>";
 
 /***/ }),
 
