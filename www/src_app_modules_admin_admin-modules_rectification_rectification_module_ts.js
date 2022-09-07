@@ -369,7 +369,7 @@ let ViewRectificationComponent = class ViewRectificationComponent {
         this.finalData = [];
         this.p = 1;
         this.rectType = '';
-        this.rectificationDates = ['DateOfComplaint', 'DateOfRectification'];
+        this.rectificationDates = ['DateOfComplaint', 'DateOfRectification', 'Pending', 'Rectified'];
         this.rectificationData = [];
     }
     ngOnInit() {
@@ -388,20 +388,36 @@ let ViewRectificationComponent = class ViewRectificationComponent {
         this.filterRectBy(this.rectType, this.selectedDate);
     }
     filterRectBy(type, date) {
+        this.p = 1;
         this.rectType = type;
         this.selectedDate = date;
-        if (type == '' && date == '') {
-            this.finalData = this.rectificationData;
-        }
-        else if (type != '' && date != '') {
+        if ((type == 'DateOfComplaint' || type == 'DateOfRectification') && date != '') {
             this.finalData = this.rectificationData.filter((item) => {
                 return (item[type] == moment__WEBPACK_IMPORTED_MODULE_7__(date).format('MM/DD/YYYY'));
+            });
+        }
+        else if ((type == 'Pending') && date != '') {
+            this.finalData = this.rectificationData.filter((item) => {
+                return (item.Status == type && (item.DateOfComplaint == moment__WEBPACK_IMPORTED_MODULE_7__(date).format('MM/DD/YYYY')));
+            });
+        }
+        else if ((type == 'Rectified') && date != '') {
+            this.finalData = this.rectificationData.filter((item) => {
+                return (item.Status == type && (item.DateOfRectification == moment__WEBPACK_IMPORTED_MODULE_7__(date).format('MM/DD/YYYY')));
             });
         }
         else if (date != '') {
             this.finalData = this.rectificationData.filter((item) => {
                 return (item.DateOfComplaint == moment__WEBPACK_IMPORTED_MODULE_7__(date).format('MM/DD/YYYY') || item.DateOfRectification == moment__WEBPACK_IMPORTED_MODULE_7__(date).format('MM/DD/YYYY'));
             });
+        }
+        else if (type == 'Pending' || type == 'Rectified') {
+            this.finalData = this.rectificationData.filter((item) => {
+                return (item.Status == type);
+            });
+        }
+        else {
+            this.finalData = this.rectificationData;
         }
     }
     pagination(event) {

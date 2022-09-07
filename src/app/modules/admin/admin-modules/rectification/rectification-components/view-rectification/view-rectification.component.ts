@@ -21,7 +21,7 @@ export class ViewRectificationComponent implements OnInit {
   userDetails: any;
   p: number = 1;
   rectType: String = '';
-  rectificationDates = ['DateOfComplaint', 'DateOfRectification'];
+  rectificationDates = ['DateOfComplaint', 'DateOfRectification', 'Pending', 'Rectified'];
   selectedDate: '';
   rectificationData: any = [];
   constructor(public titleService: TitlesService,
@@ -48,18 +48,34 @@ export class ViewRectificationComponent implements OnInit {
     this.filterRectBy(this.rectType, this.selectedDate);
   }
   filterRectBy(type, date) {
+    this.p = 1;
     this.rectType = type;
     this.selectedDate = date;
-    if (type == '' && date == '') {
-      this.finalData = this.rectificationData;
-    } else if (type != '' && date != '') {
+    if ((type == 'DateOfComplaint' || type == 'DateOfRectification') && date != '') {
       this.finalData = this.rectificationData.filter((item) => {
         return (item[type] == moment(date).format('MM/DD/YYYY'));
       })
-    } else if (date != '') {
+    } else if ((type == 'Pending') && date != '') {
+      this.finalData = this.rectificationData.filter((item) => {
+        return (item.Status == type && (item.DateOfComplaint == moment(date).format('MM/DD/YYYY')));
+      })
+    }
+    else if ((type == 'Rectified') && date != '') {
+      this.finalData = this.rectificationData.filter((item) => {
+        return (item.Status == type && (item.DateOfRectification == moment(date).format('MM/DD/YYYY')));
+      })
+    }
+    else if (date != '') {
       this.finalData = this.rectificationData.filter((item) => {
         return (item.DateOfComplaint == moment(date).format('MM/DD/YYYY') || item.DateOfRectification == moment(date).format('MM/DD/YYYY'));
       })
+    }
+    else if (type == 'Pending' || type == 'Rectified') {
+      this.finalData = this.rectificationData.filter((item) => {
+        return (item.Status == type);
+      })
+    } else {
+      this.finalData = this.rectificationData;
     }
   }
   pagination(event) {
