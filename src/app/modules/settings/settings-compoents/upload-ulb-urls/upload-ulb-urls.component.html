@@ -1,54 +1,63 @@
-<div class="row">
-  <div class="col-12 setting-form">
-      <form [formGroup]="ulbURLSFormGroup">
-          <div class="row">
-              <div class="col-md-5 col-12">
-                  <mat-form-field class="example-full-width">
-                      <mat-select placeholder="Select ULB" type="text" formControlName="ulb_name" name="ulb_name" required>
-                          <mat-option *ngFor="let option of cities" [value]="option.city">{{option.city}}</mat-option>
-                      </mat-select>
-                      <mat-error *ngIf="!ulbURLSFormGroup.get('ulb_name').valid">Select valid ULB. </mat-error>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-5 col-12">
-                  <mat-form-field class="example-full-width">
-                      <input matInput placeholder="Enter URL" type="text" formControlName="ulb_url" name="ulb_url" required>
-                      <mat-error *ngIf="!ulbURLSFormGroup.get('ulb_url').valid">Enter valid URL. </mat-error>
-                  </mat-form-field>
-              </div>
-              <div class="col-md-2 col-12">
-                  <button type="button" (click)="ULBSubmitFun()" [disabled]="ulbURLSFormGroup.invalid" class="btn custom-button pull-right">{{titleService.btn.submit}}</button>
-              </div>
-          </div>
-      </form>
-  </div>
-  <div class="col-12">
-      <div class="table-responsive">
-          <table class="table table-borderless">
-              <thead>
-                  <tr>
-                      <th>ULB</th>
-                      <th>URL</th>
-                      <th>Actions</th>
-                  </tr>
-              </thead>
-              <tbody>
-                  <tr *ngFor="let item of ulbURLSData | paginate: { itemsPerPage: 10, currentPage: p };">
-                      <td>{{item.ulb_name}}</td>
-                      <td>{{item.ulb_url}}</td>
-                      <td>
-                          <i matTooltip="{{titleService.tooltip.mat_delete}}" class="{{iconService.fa_icons.delete}}" (click)="deleteULBURLsFun(item)"></i>
-                      </td>
-                  </tr>
+<div class="main-container">
+    <div class="card dialog">
+        <div class="card-header card-header-primary">
+            <h5 class="card-title">{{titleService.titles.admin_add_ULB_Urls}}</h5>
+            <div class="icon add-icon">
+                <i class="{{iconService.fa_icons.remove}}" aria-hidden="true"
+                    matTooltip="{{titleService.tooltip.mat_close}}" (click)="onNoClick()"></i>
+            </div>
+        </div>
+        <div class="card-body profile-header">
+            <form [formGroup]="ulbURLSFormGroup">
+                <div class="row">
+                    <div class="col-md-6 col-12">
+                        <mat-form-field class="example-full-width">
+                            <mat-select placeholder="Select ULB" type="text" formControlName="ulb_name" name="ulb_name"
+                                required>
+                                <mat-option *ngFor="let option of cities" [value]="option.city">{{option.city}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="!ulbURLSFormGroup.get('ulb_name').valid">Select valid ULB. </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Enter URL" type="text" formControlName="ulb_url" name="ulb_url"
+                                required>
+                            <mat-error *ngIf="!ulbURLSFormGroup.get('ulb_url').valid">Enter valid URL. </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="LED Lamps Installed" type="number"
+                                formControlName="total_led_lamps" name="total_led_lamps" required>
+                            <mat-error *ngIf="!ulbURLSFormGroup.get('total_led_lamps').valid">Enter valid LED lamps.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Installed CCMS" type="text" formControlName="installed_ccms"
+                                name="installed_ccms" required>
+                            <mat-error *ngIf="!ulbURLSFormGroup.get('installed_ccms').valid">Enter valid installed CCMS.
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4 col-12">
+                        <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Load in KW" type="text" formControlName="load" name="load"
+                                required>
+                            <mat-error *ngIf="!ulbURLSFormGroup.get('load').valid">Enter valid Load. </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-12 col-12 stepper-btns">
+                        <button class="btn btn-cancel" (click)="onNoClick()">Cancel</button>&nbsp;
 
-              </tbody>
-          </table>
-      </div>
-      <div align="end" style="padding: 0px !important;" *ngIf="ulbURLSData.length>10">
-          <pagination-controls (pageChange)="pagination($event)" previousLabel="" nextLabel="" ></pagination-controls>
-      </div>
-  </div>
-</div>
-<div class="loading-indicator" *ngIf="spinnerloader">
-  <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
+                        <button type="button" (click)="ULBSubmitFun()" [disabled]="ulbURLSFormGroup.invalid"
+                            class="btn custom-button pull-right">{{titleService.btn.submit}}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

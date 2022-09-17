@@ -113,11 +113,11 @@ export class ViewRectificationComponent implements OnInit {
       if (result.success) {
         this.spinnerloader = false;
         if (this.userDetails.user_role != 'super_admin')
-          this.rectificationData = result.data.filter((item) => {
+          this.rectificationData = result.data.reverse().filter((item) => {
             return item.NameOfULB.toLowerCase() == this.userDetails.user_ulb.toLowerCase()
           });
         else
-          this.rectificationData = result.data;
+          this.rectificationData = result.data.reverse();
 
         this.filterRectBy('', '');
       }

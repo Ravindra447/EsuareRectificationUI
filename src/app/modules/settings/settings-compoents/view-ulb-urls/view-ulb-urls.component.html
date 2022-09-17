@@ -1,0 +1,50 @@
+<div class="setting-container">
+    <div class="row">
+        <div class="col-12">
+            <button type="button" (click)="addULBURLFun()" class="btn custom-button pull-right"
+                matTooltip="{{titleService.tooltip.mat_add_ulb_url}}">
+                <i class="{{iconService.fa_icons.plus}}"
+                    aria-hidden="true"></i>&nbsp;&nbsp;{{titleService.btn.add_ulb_url}}
+            </button>
+        </div>
+        <div class="col-12" style="margin-top: 25px;">
+            <div class="table-responsive">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th>ULB</th>
+                            <th>URL</th>
+                            <th>LED Lamps</th>
+                            <th>CCMS</th>
+                            <th>Load</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of ulbURLSData | paginate: { itemsPerPage: 10, currentPage: p };">
+                            <td>{{item.ulb_name}}</td>
+                            <td>{{item.ulb_url}}</td>
+                            <td>{{item.total_led_lamps}}</td>
+                            <td>{{item.installed_ccms}}</td>
+                            <td>{{item.load}}</td>
+                            <td>
+                                <i matTooltip="{{titleService.tooltip.mat_view}}" class="{{iconService.fa_icons.edit}}"
+                                    (click)="editFun(item)"></i>&nbsp;&nbsp;
+                                <i matTooltip="{{titleService.tooltip.mat_delete}}"
+                                    class="{{iconService.fa_icons.delete}}" (click)="deleteULBURLsFun(item)"></i>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <div align="end" style="padding: 0px !important;" *ngIf="ulbURLSData.length>10">
+                <pagination-controls (pageChange)="pagination($event)" previousLabel="" nextLabel="">
+                </pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="loading-indicator" *ngIf="spinnerloader">
+    <mat-spinner mode="indeterminate" color="primary"></mat-spinner>
+</div>

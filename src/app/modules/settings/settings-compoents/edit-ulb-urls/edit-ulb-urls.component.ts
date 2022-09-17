@@ -7,25 +7,28 @@ import { Router } from "@angular/router";
 import { UlbUrlsService } from '../../../../services/API/Settings/ulb-urls.service';
 import { UserApiService } from '../../../../Services/API/user-api.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DataShareService } from '../../../../services/Utils/data-share.service';
 
 @Component({
-  selector: 'app-upload-ulb-urls',
-  templateUrl: './upload-ulb-urls.component.html',
-  styleUrls: ['./upload-ulb-urls.component.scss'],
+  selector: 'app-edit-ulb-urls',
+  templateUrl: './edit-ulb-urls.component.html',
+  styleUrls: ['./edit-ulb-urls.component.scss'],
 })
-export class UploadULBURLSComponent implements OnInit {
+export class EditUlbUrlsComponent implements OnInit {
+
   ulbURLSFormGroup: FormGroup;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   spinnerloader: boolean = false;
-  cities: any=[];
+  cities: any = [];
 
   constructor(public titleService: TitlesService,
     private toastr: ToastrService,
     public iconService: IconsService,
     private _formBuilder: FormBuilder,
-    private apiService:UlbUrlsService,
+    private apiService: UlbUrlsService,
     private userApiService: UserApiService,
-    public dialogRef: MatDialogRef<UploadULBURLSComponent>,
+    private dataShareService: DataShareService,
+    public dialogRef: MatDialogRef<EditUlbUrlsComponent>,
     private router: Router) { }
   ngOnInit(): void {
     this.cities = this.userApiService.cities;
@@ -35,14 +38,14 @@ export class UploadULBURLSComponent implements OnInit {
       total_led_lamps: [null, [Validators.required]],
       installed_ccms: ['', [Validators.required]],
       load: ['', [Validators.required]],
-
-      ulb_url_satus:[true]
+      ulb_url_satus: [true],
+      _id: []
     });
+    this.ULBURLSData();
   }
-  ULBSubmitFun(){
-    console.log(this.ulbURLSFormGroup.value);
+  ULBUpdatFun() {
     this.spinnerloader = true;
-    this.apiService.createUlbURLs(this.ulbURLSFormGroup.value).subscribe((result: any) => {
+    this.apiService.updateUlbURL(this.ulbURLSFormGroup.value).subscribe((result: any) => {
       if (result.success) {
         this.spinnerloader = false;
         this.toastr.success(result.msg);
@@ -51,6 +54,23 @@ export class UploadULBURLSComponent implements OnInit {
     }, error => {
       this.spinnerloader = false;
       this.toastr.error('Internal server error.');
+    })
+  }
+  ULBURLSData() {
+    this.dataShareService.currentData.subscribe((data: any) => {
+      if (data === 'no data') {
+        this.dialogRef.close();
+      } else {
+        this.ulbURLSFormGroup.setValue({
+          ulb_name: data.ulb_name,
+          ulb_url: data.ulb_url,
+          total_led_lamps: data.total_led_lamps,
+          installed_ccms: data.installed_ccms,
+          load: data.load,
+          ulb_url_satus: data.ulb_url_satus,
+          _id: data._id
+        });
+      }
     })
   }
   onNoClick() {
