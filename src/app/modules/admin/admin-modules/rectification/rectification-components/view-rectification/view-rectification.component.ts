@@ -47,7 +47,6 @@ export class ViewRectificationComponent implements OnInit {
       this.showAdd = false;
     }
     this.getULBURLsFun();
-    this.fetchRectifications();
   }
   onSelectionChange(event) {
     this.rectType = event.value;
@@ -160,6 +159,7 @@ export class ViewRectificationComponent implements OnInit {
           this.ulbURLSData = result.data.reverse();
 
         this.ulbData = this.ulbURLSData[0];
+        this.fetchRectifications();
       }
     }, error => {
       this.spinnerloader = false;
@@ -171,6 +171,7 @@ export class ViewRectificationComponent implements OnInit {
     this.defectiveLites = this.finalData.filter((item) => {
       return (item.rectification_uploaded_date == moment(event).format('MM/DD/YYYY'));
     }).length;
+    console.log(this.ulbData.total_led_lamps);
     this.ledLightsOn = this.ulbData.total_led_lamps - (this.defectiveLites + this.ulbData.light_defective);
     this.percentage = Number(String((this.ledLightsOn / this.ulbData.total_led_lamps) * 100).slice(0, 2));
   }
