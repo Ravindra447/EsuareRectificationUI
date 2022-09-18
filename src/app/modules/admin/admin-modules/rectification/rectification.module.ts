@@ -8,12 +8,28 @@ import { ViewRectificationComponent } from './rectification-components/view-rect
 import { UpdateRectificationComponent } from './rectification-components/update-rectification/update-rectification.component';
 //shared module
 import { SharedModule } from '../../../shared/shared.module';
+import { NgCircleProgressModule } from 'ng-circle-progress';
+
 @NgModule({
   declarations: [UploadRectificationDataComponent, ViewRectificationComponent,UpdateRectificationComponent],
   imports: [
     CommonModule,
     RectificationRoutingModule,
-    SharedModule
+    SharedModule,
+    NgCircleProgressModule.forRoot({
+      backgroundColor: "green",
+      backgroundPadding: 8,
+      radius: 35,
+      space: -15,
+      maxPercent: 100,
+      unitsColor: "#ffffff",
+      outerStrokeWidth: 5,
+      outerStrokeColor: "white",
+      innerStrokeColor: "green",
+      innerStrokeWidth: 2,
+      titleColor: "#ffffff",
+      subtitleColor: "#ffffff"
+    })
   ]
 })
 export class RectificationModule { }

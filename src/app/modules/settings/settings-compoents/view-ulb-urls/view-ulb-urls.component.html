@@ -17,6 +17,7 @@
                             <th>LED Lamps</th>
                             <th>CCMS</th>
                             <th>Load</th>
+                            <th>Defective Light</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -27,6 +28,7 @@
                             <td>{{item.total_led_lamps}}</td>
                             <td>{{item.installed_ccms}}</td>
                             <td>{{item.load}}</td>
+                            <td>{{item.light_defective}}</td>
                             <td>
                                 <i matTooltip="{{titleService.tooltip.mat_view}}" class="{{iconService.fa_icons.edit}}"
                                     (click)="editFun(item)"></i>&nbsp;&nbsp;

@@ -180,6 +180,8 @@ let TitlesService = class TitlesService {
             admin_manage_user: "Users",
             admin_update_user: "Update User",
             admin_setting: "Settings",
+            admin_add_ULB_Urls: "Add ULB URLS",
+            admin_update_ULB_Urls: "Update ULB URLS",
         };
         this.btn = {
             submit: "Submit",
@@ -192,7 +194,8 @@ let TitlesService = class TitlesService {
             read_more: "Detail View",
             login: "Login",
             delete_image: "Delete Image",
-            update_image: "Update Image"
+            update_image: "Update Image",
+            add_ulb_url: "ADD"
         };
         this.tooltip = {
             mat_add_rectification: "Add Rectification",
@@ -201,6 +204,7 @@ let TitlesService = class TitlesService {
             mat_close: "Close",
             mat_add_publication: "Add/update",
             mat_add_user: "Create User",
+            mat_add_ulb_url: "Add ULB Urls",
         };
     }
     isLoggedIn() {
@@ -365,6 +369,8 @@ let TitlesService = class TitlesService {
             admin_manage_user: "Users",
             admin_update_user: "Update User",
             admin_setting: "Settings",
+            admin_add_ULB_Urls: "Add ULB URLS",
+            admin_update_ULB_Urls: "Update ULB URLS",
         };
         this.btn = {
             submit: "Submit",
@@ -377,7 +383,8 @@ let TitlesService = class TitlesService {
             read_more: "Detail View",
             login: "Login",
             delete_image: "Delete Image",
-            update_image: "Update Image"
+            update_image: "Update Image",
+            add_ulb_url: "ADD"
         };
         this.tooltip = {
             mat_add_rectification: "Add Rectification",
@@ -386,6 +393,7 @@ let TitlesService = class TitlesService {
             mat_close: "Close",
             mat_add_publication: "Add/update",
             mat_add_user: "Create User",
+            mat_add_ulb_url: "Add ULB Urls",
         };
     }
     isLoggedIn() {

@@ -39,6 +39,7 @@ export class EditUlbUrlsComponent implements OnInit {
       installed_ccms: ['', [Validators.required]],
       load: ['', [Validators.required]],
       ulb_url_satus: [true],
+      light_defective: [0, [Validators.required]],
       _id: []
     });
     this.ULBURLSData();
@@ -68,6 +69,7 @@ export class EditUlbUrlsComponent implements OnInit {
           installed_ccms: data.installed_ccms,
           load: data.load,
           ulb_url_satus: data.ulb_url_satus,
+          light_defective:data.light_defective,
           _id: data._id
         });
       }

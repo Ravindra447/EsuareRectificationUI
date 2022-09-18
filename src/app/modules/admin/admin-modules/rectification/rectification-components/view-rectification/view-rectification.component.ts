@@ -8,6 +8,7 @@ import { UpdateRectificationComponent } from '../update-rectification/update-rec
 import { ToastrService } from 'ngx-toastr';
 import * as XLSX from 'xlsx';
 import * as moment from 'moment';
+import { UlbUrlsService } from '../../../../../../services/API/Settings/ulb-urls.service';
 
 @Component({
   selector: 'app-view-rectification',
@@ -18,24 +19,34 @@ export class ViewRectificationComponent implements OnInit {
   spinnerloader: Boolean = false;
   showAdd: Boolean = true;
   finalData: any = [];
+  ulbURLSData: any = [];
+  ulbData: any;
   userDetails: any;
+  percentage = 0;
   p: number = 1;
   rectType: String = '';
+  searchDate = new Date()
   rectificationDates = ['DateOfComplaint', 'DateOfRectification', 'Pending', 'Rectified'];
   selectedDate: '';
+  defectiveLites = 0;
+  ledLightsOn = 0;
   rectificationData: any = [];
   constructor(public titleService: TitlesService,
     private dataShareService: DataShareService,
     private apiService: RectificationService,
+    private ulbUrlService: UlbUrlsService,
     public dialog: MatDialog,
     private toastr: ToastrService,
     public iconService: IconsService) { }
 
   ngOnInit() {
+    const dd = moment().subtract(1, 'days');
+    this.searchDate = new Date(dd.toISOString());
     this.userDetails = JSON.parse(localStorage.getItem('userDetails'));
     if (this.userDetails.user_role === 'user') {
       this.showAdd = false;
     }
+    this.getULBURLsFun();
     this.fetchRectifications();
   }
   onSelectionChange(event) {
@@ -77,6 +88,7 @@ export class ViewRectificationComponent implements OnInit {
     } else {
       this.finalData = this.rectificationData;
     }
+    this.checkSearchDate(new Date(this.finalData[0].rectification_uploaded_date));
   }
   pagination(event) {
     this.p = event;
@@ -132,5 +144,34 @@ export class ViewRectificationComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
     /* save to file */
     XLSX.writeFile(wb, 'rectification.xlsx');
+  }
+  getULBURLsFun() {
+    this.spinnerloader = true;
+    this.ulbUrlService.fetchAllUlbURLs().subscribe((result: any) => {
+      if (result.success) {
+        this.spinnerloader = false;
+        this.ulbURLSData = result.data;
+        console.log(this.ulbURLSData);
+        if (this.userDetails.user_role != 'super_admin')
+          this.ulbURLSData = result.data.reverse().filter((item) => {
+            return item.ulb_name.toLowerCase() == this.userDetails.user_ulb.toLowerCase()
+          });
+        else
+          this.ulbURLSData = result.data.reverse();
+
+        this.ulbData = this.ulbURLSData[0];
+      }
+    }, error => {
+      this.spinnerloader = false;
+      this.toastr.error('Internal server error.');
+    })
+  }
+  checkSearchDate(event) {
+    this.searchDate = new Date(event);
+    this.defectiveLites = this.finalData.filter((item) => {
+      return (item.rectification_uploaded_date == moment(event).format('MM/DD/YYYY'));
+    }).length;
+    this.ledLightsOn = this.ulbData.total_led_lamps - (this.defectiveLites + this.ulbData.light_defective);
+    this.percentage = Number(String((this.ledLightsOn / this.ulbData.total_led_lamps) * 100).slice(0, 2));
   }
 }

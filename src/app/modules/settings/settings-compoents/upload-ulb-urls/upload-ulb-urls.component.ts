@@ -17,13 +17,13 @@ export class UploadULBURLSComponent implements OnInit {
   ulbURLSFormGroup: FormGroup;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   spinnerloader: boolean = false;
-  cities: any=[];
+  cities: any = [];
 
   constructor(public titleService: TitlesService,
     private toastr: ToastrService,
     public iconService: IconsService,
     private _formBuilder: FormBuilder,
-    private apiService:UlbUrlsService,
+    private apiService: UlbUrlsService,
     private userApiService: UserApiService,
     public dialogRef: MatDialogRef<UploadULBURLSComponent>,
     private router: Router) { }
@@ -35,11 +35,11 @@ export class UploadULBURLSComponent implements OnInit {
       total_led_lamps: [null, [Validators.required]],
       installed_ccms: ['', [Validators.required]],
       load: ['', [Validators.required]],
-
-      ulb_url_satus:[true]
+      light_defective: [0, [Validators.required]],
+      ulb_url_satus: [true]
     });
   }
-  ULBSubmitFun(){
+  ULBSubmitFun() {
     console.log(this.ulbURLSFormGroup.value);
     this.spinnerloader = true;
     this.apiService.createUlbURLs(this.ulbURLSFormGroup.value).subscribe((result: any) => {
