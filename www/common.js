@@ -244,7 +244,7 @@ __webpack_require__.r(__webpack_exports__);
 
 let ApiUrlService = class ApiUrlService {
     constructor() {
-        this.url = 'https://esquare-rectification.herokuapp.com/apis';
+        this.url = 'http://139.59.59.15:9003/apis';
     }
 };
 ApiUrlService.ctorParameters = () => [];
@@ -484,7 +484,7 @@ __webpack_require__.r(__webpack_exports__);
 
 let ApiUrlService = class ApiUrlService {
     constructor() {
-        this.url = 'https://esquare-rectification.herokuapp.com/apis';
+        this.url = 'http://139.59.59.15:9003/apis';
     }
 };
 ApiUrlService.ctorParameters = () => [];
